@@ -97,7 +97,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.9.0.apk
+shasum -a 256 sonde-0.10.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -125,7 +125,7 @@ Pas de localisation, pas de stockage, pas de réseau, pas de caméra, pas de
 contacts. C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.9.0.apk
+aapt2 dump permissions sonde-0.10.0.apk
 ```
 
 ## Licence et droits
