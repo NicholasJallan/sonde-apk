@@ -82,11 +82,13 @@ l'installation depuis une source inconnue :
    gestionnaire de fichiers à installer des applications ;
 3. acceptez, puis installez.
 
-**Android 8.0 minimum.** Un téléphone doté du Bluetooth basse consommation est
-indispensable.
+**Android 8.0 minimum**, et un téléphone doté du Bluetooth basse consommation.
 
-Sur Android 8 à 11, l'analyse fonctionne mais **l'impression Bluetooth n'est pas
-accessible** ; l'export du fichier d'étiquette reste possible.
+Mais 8.0 est une déclaration, pas une garantie : l'application n'a été
+**éprouvée que sur Android 16**. Sur Android 11 et antérieur, la sélection
+d'imprimante ne devrait pas fonctionner du tout — l'autorisation Bluetooth
+qu'elle vérifie n'existe pas sur ces versions. L'analyse, elle, devrait
+fonctionner, et l'export du fichier d'étiquette reste ouvert dans tous les cas.
 
 ### Vérifier que le fichier est bien celui-ci
 
