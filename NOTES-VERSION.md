@@ -19,6 +19,6 @@ Elle produit des chiffres — profondeur maximale, équivalent narcotique, densi
 | | |
 |---|---|
 | Version | 0.8.1 |
-| Android minimum | 8.0 (API 26) |
-| Taille | 6,5 Mo |
-| SHA-256 | `8dd074527c9c050f4ab87bbd2db53020f5288885c3198944a55a2f19f9eb55cb` |
+| Android minimum | 12 (API 31) |
+| Taille | 6,4 Mo |
+| SHA-256 | `76a81421cd0b4afe65929ea9300a36c2ade1b9d00d1bb87a134aa578f0c9dbe7` |

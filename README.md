@@ -82,13 +82,15 @@ l'installation depuis une source inconnue :
    gestionnaire de fichiers à installer des applications ;
 3. acceptez, puis installez.
 
-**Android 8.0 minimum**, et un téléphone doté du Bluetooth basse consommation.
+**Android 12 minimum**, et un téléphone doté du Bluetooth basse consommation.
 
-Mais 8.0 est une déclaration, pas une garantie : l'application n'a été
-**éprouvée que sur Android 16**. Sur Android 11 et antérieur, la sélection
-d'imprimante ne devrait pas fonctionner du tout — l'autorisation Bluetooth
-qu'elle vérifie n'existe pas sur ces versions. L'analyse, elle, devrait
-fonctionner, et l'export du fichier d'étiquette reste ouvert dans tous les cas.
+Android 12 plutôt que 8 est un choix délibéré. Les versions antérieures
+exigeaient la permission de **localisation** pour tout scan Bluetooth, et
+l'autorisation dont dépend la sélection d'imprimante n'y existe pas : l'app y
+aurait réclamé davantage pour en faire moins. Mieux vaut ne pas s'installer que
+s'installer à moitié.
+
+L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 
 ### Vérifier que le fichier est bien celui-ci
 
@@ -112,12 +114,19 @@ L'application **n'accède pas au réseau** — elle n'en a pas la permission, et
 peut donc rien transmettre nulle part. Aucune donnée n'est collectée, aucune
 mesure n'est envoyée, aucune statistique n'est levée.
 
+Elle en demande **deux**, et rien d'autre :
+
 | Permission | Pourquoi |
 |---|---|
-| `BLUETOOTH_SCAN` | trouver l'analyseur. Déclarée `neverForLocation` : le scan n'est jamais utilisé pour en déduire une position |
+| `BLUETOOTH_SCAN` | trouver l'analyseur. Déclarée `neverForLocation` : Android lui interdit alors d'en déduire une position, et le système le garantit |
 | `BLUETOOTH_CONNECT` | dialoguer avec l'analyseur et avec l'imprimante |
-| `BLUETOOTH`, `BLUETOOTH_ADMIN` | idem, sur Android 11 et antérieur uniquement |
-| `ACCESS_FINE_LOCATION` | **Android 11 et antérieur uniquement.** Ces versions d'Android imposaient cette permission pour tout scan Bluetooth, sans rapport avec la localisation. Elle n'est ni demandée ni utilisable au-delà d'Android 11 |
+
+Pas de localisation, pas de stockage, pas de réseau, pas de caméra, pas de
+contacts. C'est vérifiable sur le fichier lui-même :
+
+```bash
+aapt2 dump permissions sonde-0.8.1.apk
+```
 
 ## Licence et droits
 
