@@ -130,11 +130,14 @@ aapt2 dump permissions sonde-0.8.1.apk
 
 ## Licence et droits
 
-Le code source n'est pas publié et reste la propriété de son auteur.
+Voir **[LICENSE](LICENSE)**. En résumé, sans que ce résumé ne s'y substitue :
 
-Les logotypes présents dans l'application et sur les étiquettes appartiennent à
-leur propriétaire et ne sont couverts par aucune autorisation d'usage.
-
-L'application est fournie **« en l'état », sans garantie d'aucune sorte**,
-expresse ou implicite, y compris et sans limitation les garanties de qualité
-marchande, d'adéquation à un usage particulier et d'absence de contrefaçon.
+- l'application peut être installée et utilisée librement, gratuitement, dans
+  n'importe quel contexte ;
+- le fichier peut être retransmis, mais **à l'identique** et accompagné de son
+  avertissement — ni modifié, ni resigné, ni vendu ;
+- le code source n'est pas publié et reste la propriété de son auteur ;
+- les logotypes affichés et imprimés appartiennent à leur titulaire et ne sont
+  couverts par **aucune** autorisation d'usage ;
+- l'application est fournie **« en l'état », sans garantie d'aucune sorte**, et
+  vous demeurez seul responsable de tout gaz que vous respirez.
