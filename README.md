@@ -41,14 +41,15 @@ n'est pas éprouvé :
 
 | Point | État réel |
 |---|---|
-| **Impression Bluetooth** | Le transport n'a **jamais rencontré une vraie imprimante**. Le langage ZPL produit a été validé contre les métriques Zebra, le lien Bluetooth ne l'a pas été. |
+| **Largeur imprimable** | Le flux suppose une tête de 100 mm utile. À confirmer : la tête 4 pouces de la ZD421t en couvre un peu plus. |
 | **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil et un seul firmware**. Sur un autre, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
 | **Largeur des caractères imprimés** | Le modèle d'avance de police est approximatif. Les textes imprimés peuvent sortir plus petits que prévu. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
 
 ### Ce qu'elle ne sait pas faire
 
-L'application n'est **pas configurable**. Ni réglage, ni option, ni préférence.
+L'application n'a **qu'un seul champ** : le prénom de la personne qui analyse,
+qui signe les étiquettes. Rien d'autre ne se règle — ni option, ni préférence.
 
 - **Un seul modèle d'imprimante** : Zebra ZD421t à 203 dpi. Sur une imprimante
   300 dpi, les étiquettes sortiraient aux deux tiers de leur taille.
@@ -58,8 +59,9 @@ L'application n'est **pas configurable**. Ni réglage, ni option, ni préférenc
 - **Français uniquement**, **mètres uniquement**.
 - Elle se connecte au **premier analyseur ECHO qu'elle trouve**. Si plusieurs
   sont allumés à portée, rien ne garantit que ce soit le vôtre.
-- Aucun réglage n'est mémorisé : le choix de l'imprimante et de la ppO₂ est à
-  refaire à chaque démarrage.
+- Trois choses seulement survivent à la fermeture : l'imprimante retenue, la
+  ppO₂ choisie et le prénom de l'analyste. Rien d'autre n'est mémorisé, et rien
+  ne quitte jamais le téléphone.
 
 ## Divesoft
 
@@ -97,7 +99,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.10.0.apk
+shasum -a 256 sonde-0.12.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -125,7 +127,7 @@ Pas de localisation, pas de stockage, pas de réseau, pas de caméra, pas de
 contacts. C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.10.0.apk
+aapt2 dump permissions sonde-0.12.0.apk
 ```
 
 ## Licence et droits

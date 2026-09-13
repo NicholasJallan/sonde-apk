@@ -1,35 +1,51 @@
-# Note de version — 0.10.0
+# Note de version — 0.12.0
 
 Texte à coller dans la description de la version GitHub.
 
 ---
 
-La cible de stabilisation montre enfin le chemin parcouru.
+Les étiquettes disent désormais **qui** a fait l'analyse, et deux d'entre elles
+en sortent avec une MOD plus grande qu'avant.
 
-En 0.9.0 elle restait rouge et immobile tant que le gaz n'était pas déjà posé :
-l'écart pouvait tomber de vingt-six points à un dixième sans que rien ne bouge à
-l'écran. C'était le moment où la mesure travaille le plus, et le seul où l'on n'a
-rien d'autre à faire que regarder.
+Le prénom se saisit sur l'écran de mesure, se conserve d'une bouteille à la
+suivante, et se corrige tout seul — `jean-pierre` devient `Jean-Pierre`. Il
+signe le col, la seconde étiquette d'un bailout et l'étiquette de diluent ;
+jamais la grande étiquette de MOD, qui ne porte que son chiffre et n'a rien à
+partager.
 
-Désormais la couleur progresse dès les premières secondes, et les anneaux de la
-cible racontent la même chose autrement : ils ondoient tant que le gaz remue, se
-lissent en se posant, et surtout leurs respirations se synchronisent — d'abord
-chacun à son rythme, puis tous ensemble. Un système qui se met en phase se lit
-comme un système qui s'ordonne, sans rien à compter.
+Le loger a été l'occasion de reprendre deux compositions. Sur le **diluent**, la
+date quitte le dessous du mélange pour la colonne libre à côté de lui, où elle
+ne coûte plus rien : la MOD y passe de 4,8 à **5,6 cm** de chiffres. Sur le
+**col**, le groupe `MOD 66 M` se centre enfin sur toute la largeur de
+l'étiquette au lieu de la seule colonne que laisse la marque, et le chiffre y
+gagne un cinquième de largeur sans rien perdre en hauteur.
 
-Le mot sous la cible est corrigé du même défaut : il annonçait « valeurs
-instables » sans broncher pendant toute la convergence, alors que l'écart affiché
-juste en dessous fondait à vue d'œil. Il se règle maintenant sur cet écart.
+L'écran de lancement affiche sa version dans le coin, pour qu'on sache quel
+binaire tourne sans ouvrir le menu.
 
-**Rien ne change au calcul ni aux règles de sûreté.** Le figeage reste interdit
-tant que la mesure n'est pas restée cinq secondes dans un dixième de point, et le
-vert plein reste réservé à une mesure réellement tenue — une immobilité parfaite
-dont rien n'est encore acquis ne dépasse pas le milieu de l'échelle.
+## Depuis la 0.10.0
+
+La 0.11.0 n'a jamais été publiée ; ce qu'elle contenait arrive ici.
+
+- **Le diluent tient sur une seule étiquette** au lieu de deux, avec mélange,
+  MOD et ppO₂ retenue lus ensemble.
+- **La MOD du col occupe toute la place qui lui revient** : la valeur est
+  séparée de son unité, et le filet n'attend plus la hauteur de la marque.
+- **Le CO du canal gas1 s'affiche** sur l'écran de mesure.
+- **La mesure survit à ce qui arrive à l'écran** — rotation, changement de
+  taille de police, multi-fenêtre. L'imprimante retenue et la ppO₂ choisie
+  survivent en outre à la fermeture de l'application.
+- **L'impression attend que l'imprimante ait fini de lire** avant de fermer la
+  liaison : sur les envois longs, la dernière commande n'arrivait pas.
+
+Le transport Bluetooth vers la Zebra a entre-temps rencontré une vraie ZD421t.
+Le README est corrigé en conséquence — c'est la seule des limites annoncées qui
+tombe.
 
 **Lisez le [README](../../blob/main/README.md) avant d'installer.** Cette
-application n'est pas un produit : elle a été écrite pour un seul analyseur et
-une seule imprimante, elle n'est pas configurable, et l'impression n'a jamais
-été confrontée à une vraie Zebra. Vous en assumez tous les risques.
+application n'est pas un produit : elle a été écrite pour un seul plongeur, un
+seul analyseur et une seule imprimante, et hors le prénom qui signe les
+étiquettes, elle ne se règle pas. Vous en assumez tous les risques.
 
 Elle produit des chiffres — profondeur maximale, équivalent narcotique, densité
 — dont dépend votre sécurité. Recoupez-les toujours.
@@ -38,7 +54,7 @@ Elle produit des chiffres — profondeur maximale, équivalent narcotique, densi
 
 | | |
 |---|---|
-| Version | 0.10.0 |
+| Version | 0.12.0 |
 | Android minimum | 12 (API 31) |
 | Taille | 6,4 Mo |
-| SHA-256 | `c8f55736f46fcbe5c8735e876e8f7ee19b6a845f43f69310845e2e093e45193d` |
+| SHA-256 | `546141fe0a04f34ed7afdd3dc6b0517740eb1ba27a17430750a731ca9ae758b6` |
