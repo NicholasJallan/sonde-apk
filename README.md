@@ -43,7 +43,7 @@ n'est pas éprouvé :
 |---|---|
 | **Largeur imprimable** | Le flux suppose une tête de 100 mm utile. À confirmer : la tête 4 pouces de la ZD421t en couvre un peu plus. |
 | **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil et un seul firmware**. Sur un autre, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
-| **Largeur des caractères imprimés** | Le modèle d'avance de police est approximatif. Les textes imprimés peuvent sortir plus petits que prévu. |
+| **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
 
 ### Ce qu'elle ne sait pas faire

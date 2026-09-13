@@ -1,46 +1,59 @@
-# Note de version — 0.12.0
+# Note de version — 0.13.0
 
 Texte à coller dans la description de la version GitHub.
 
 ---
 
-Les étiquettes disent désormais **qui** a fait l'analyse, et deux d'entre elles
-en sortent avec une MOD plus grande qu'avant.
+Sur l'étiquette de col, le mot **MOD** ne s'imprimait pas. L'imprimante le
+repliait sur lui-même et sortait un « DIO » superposé — et il en allait de même,
+plus discrètement, sur quinze autres champs. Cette version le corrige, et
+l'application alarme désormais sur le monoxyde de carbone.
 
-Le prénom se saisit sur l'écran de mesure, se conserve d'une bouteille à la
-suivante, et se corrige tout seul — `jean-pierre` devient `Jean-Pierre`. Il
-signe le col, la seconde étiquette d'un bailout et l'étiquette de diluent ;
-jamais la grande étiquette de MOD, qui ne porte que son chiffre et n'a rien à
-partager.
+## Le CO alarme
 
-Le loger a été l'occasion de reprendre deux compositions. Sur le **diluent**, la
-date quitte le dessous du mélange pour la colonne libre à côté de lui, où elle
-ne coûte plus rien : la MOD y passe de 4,8 à **5,6 cm** de chiffres. Sur le
-**col**, le groupe `MOD 66 M` se centre enfin sur toute la largeur de
-l'étiquette au lieu de la seule colonne que laisse la marque, et le chiffre y
-gagne un cinquième de largeur sans rien perdre en hauteur.
+Au-delà de **5 ppm** — le seuil de l'ECHO lui-même — un avertissement passe
+devant tout le reste sur l'écran de mesure, et suit la mesure une fois figée.
 
-L'écran de lancement affiche sa version dans le coin, pour qu'on sache quel
-binaire tourne sans ouvrir le menu.
+Il **n'interdit rien** : ni de figer, ni d'imprimer. Décider qu'une bouteille
+part à la purge n'appartient pas à un téléphone.
 
-## Depuis la 0.10.0
+Un capteur de CO en défaut le dit maintenant, au lieu d'afficher le même tiret
+que « pas de capteur ». Sur le seul contaminant qui tue sans odeur ni goût, un
+silence se lirait « air propre ».
 
-La 0.11.0 n'a jamais été publiée ; ce qu'elle contenait arrive ici.
+## La police de l'imprimante est mesurée
 
-- **Le diluent tient sur une seule étiquette** au lieu de deux, avec mélange,
-  MOD et ppO₂ retenue lus ensemble.
-- **La MOD du col occupe toute la place qui lui revient** : la valeur est
-  séparée de son unité, et le filet n'attend plus la hauteur de la marque.
-- **Le CO du canal gas1 s'affiche** sur l'écran de mesure.
-- **La mesure survit à ce qui arrive à l'écran** — rotation, changement de
-  taille de police, multi-fenêtre. L'imprimante retenue et la ppO₂ choisie
-  survivent en outre à la fermeture de l'application.
-- **L'impression attend que l'imprimante ait fini de lire** avant de fermer la
-  liaison : sur les envois longs, la dernière commande n'arrivait pas.
+Le rendu estimait la largeur des textes avec un ratio moyen unique. Il se
+trompait des deux côtés : trop large pour les chiffres, il rabotait la MOD ;
+trop étroit pour les capitales, il réservait aux blocs de texte moins de place
+que les lettres n'en prennent. L'imprimante repliait alors la ligne.
 
-Le transport Bluetooth vers la Zebra a entre-temps rencontré une vraie ZD421t.
-Le README est corrigé en conséquence — c'est la seule des limites annoncées qui
-tombe.
+Une table **mesurée glyphe par glyphe** — 99 caractères, relevés au dot sur un
+moteur qui applique les métriques réelles de la police Zebra — remplace ce
+ratio. Vérifié étiquette par étiquette :
+
+- **seize débordements de ligne avant, aucun après** ;
+- la MOD gagne jusqu'à **26 % de hauteur**, quatre chiffres compris.
+
+## Trois défauts silencieux
+
+- Une mesure entre 0 et 0,5 % d'oxygène se figeait, puis **n'avait aucune
+  étiquette** : l'écran annonçait « Mesure figée » pendant que celui des
+  étiquettes répondait qu'aucune mesure ne l'était.
+- Une **coupure de liaison propre** laissait l'application sur « En attente »
+  devant un analyseur de nouveau disponible, sans jamais retenter.
+- Un refus de mise en page **fermait l'application** au lieu d'afficher sa
+  raison.
+
+## Vos réglages ne quittent plus l'appareil
+
+`allowBackup="false"` fermait la sauvegarde dans le nuage, et couvrait le
+transfert d'appareil à appareil **jusqu'à Android 12**. Il ne le couvre plus :
+l'imprimante retenue, la ppO₂ et le prénom de l'analyste pouvaient suivre vers
+un téléphone neuf pendant sa configuration. Les deux chemins sont désormais
+fermés explicitement.
+
+---
 
 **Lisez le [README](../../blob/main/README.md) avant d'installer.** Cette
 application n'est pas un produit : elle a été écrite pour un seul plongeur, un
@@ -50,11 +63,15 @@ seul analyseur et une seule imprimante, et hors le prénom qui signe les
 Elle produit des chiffres — profondeur maximale, équivalent narcotique, densité
 — dont dépend votre sécurité. Recoupez-les toujours.
 
+L'alarme de CO, en particulier, n'a jamais été vue se déclencher sur du vrai
+gaz : le capteur de l'appareil de test est en défaut. Elle a été éprouvée en
+simulation, pas au bord du bassin.
+
 **Application non officielle, sans lien avec Divesoft s.r.o.**
 
 | | |
 |---|---|
-| Version | 0.12.0 |
+| Version | 0.13.0 |
 | Android minimum | 12 (API 31) |
 | Taille | 6,4 Mo |
-| SHA-256 | `546141fe0a04f34ed7afdd3dc6b0517740eb1ba27a17430750a731ca9ae758b6` |
+| SHA-256 | `9b8c362d3b0d4587ff5261f9662b5691be5d6bc031538e484756dcf12ad2765d` |
