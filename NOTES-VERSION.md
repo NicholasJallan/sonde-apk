@@ -1,4 +1,4 @@
-# Note de version — 0.19.0
+# Note de version — 0.19.2
 
 Texte à coller dans la description de la version GitHub.
 
@@ -6,6 +6,9 @@ Texte à coller dans la description de la version GitHub.
 
 Le journal des analyses ne vit plus sur un téléphone. Il vit dans un **dossier
 Google Drive**, que plusieurs appareils tiennent ensemble.
+
+> **La 0.19.0 et la 0.19.1 ne doivent pas servir.** Deux défauts les rendaient
+> inaptes au cahier commun, et ils sont décrits plus bas. Installer celle-ci.
 
 ## Un cahier commun
 
@@ -70,6 +73,33 @@ fonctionner, et c'est cela qu'il fallait empêcher.
 Le barrage porte sur l'**autorisation**, jamais sur la joignabilité : un Drive
 hors ligne n'interdit pas de mesurer.
 
+## Corrigé depuis la 0.19.0
+
+Deux défauts, trouvés en éprouvant le dispositif entre un téléphone et une
+tablette. Le second est le plus grave.
+
+**Un dossier local passait pour un dossier partagé.** Le sélecteur système mêle
+Drive, le stockage de l'appareil et le reste, et il s'ouvre sur le stockage
+local : un dossier interne se choisissait en deux gestes, l'application y
+écrivait sans broncher, et l'écran continuait d'annoncer « dossier partagé »
+devant un dossier que personne d'autre ne verrait jamais. L'application lit
+désormais la provenance du dossier, **refuse** le stockage de l'appareil au
+moment du choix, et nomme la source à l'écran — « Google Drive · mon_dossier ».
+Une source qu'elle ne sait pas nommer passe, avec un avertissement : refuser sur
+une ignorance fermerait la porte à tout service qui n'est pas Drive.
+
+**Les fichiers des autres appareils n'étaient pas lus.** Le contenu du dossier
+était parcouru en lisant les colonnes par leur rang. Un fournisseur de documents
+n'est pas tenu de les rendre dans l'ordre demandé, et Drive ne le fait pas : le
+dossier paraissait vide alors que le sélecteur système y montrait les fichiers.
+Les colonnes se lisent maintenant par leur nom.
+
+Ce second défaut en cachait un troisième, et c'est celui qui aurait pu coûter :
+un échec de lecture était avalé et rendait une liste vide, si bien que la
+réunion prenait un fichier illisible pour un fichier vide — et la réécriture qui
+suit l'aurait **effacé**. La garantie « rien ne s'écrase » tombait en silence.
+Une lecture qui échoue interrompt désormais l'envoi, et l'écran le dit.
+
 ## Depuis la 0.15.0
 
 Les versions 0.16 à 0.18 n'ont pas été publiées ; ce qu'elles contenaient arrive
@@ -106,8 +136,8 @@ ici.
 
 Le dossier partagé a été vérifié de bout en bout entre un Pixel 10 Pro XL et une
 Galaxy Tab S10 Ultra, sur Google Drive : dossier créé depuis le sélecteur,
-mesure figée puis relâchée, fichier retrouvé dans Drive avec sa colonne
-appareil. Il n'a **pas** été éprouvé sur un autre fournisseur de stockage, ni
+mesure figée sur le téléphone puis relâchée, et **relue sur la tablette** avec
+sa colonne appareil. Il n'a **pas** été éprouvé sur un autre fournisseur de stockage, ni
 sur un dossier partagé à plusieurs comptes, ni sur deux appareils du **même
 modèle** — ceux-là partageraient un fichier, ce qui se répare de soi-même mais
 n'a pas été observé en conditions réelles.
@@ -120,7 +150,7 @@ pas au bord du bassin.
 
 | | |
 |---|---|
-| Version | 0.19.0 |
+| Version | 0.19.2 |
 | Android minimum | 13 (API 33) |
-| Taille | 8,2 Mo |
-| SHA-256 | `9b1aca1a774075543a6eabecdb347726b467c6be1f6db469de0f2385a652fe1b` |
+| Taille | 8,3 Mo |
+| SHA-256 | `83e64d418aeae9537e54710ee1c0af566dc5d321dad3e7eca8b66ec0627a6273` |
