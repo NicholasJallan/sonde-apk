@@ -1,77 +1,126 @@
-# Note de version — 0.13.0
+# Note de version — 0.19.0
 
 Texte à coller dans la description de la version GitHub.
 
 ---
 
-Sur l'étiquette de col, le mot **MOD** ne s'imprimait pas. L'imprimante le
-repliait sur lui-même et sortait un « DIO » superposé — et il en allait de même,
-plus discrètement, sur quinze autres champs. Cette version le corrige, et
-l'application alarme désormais sur le monoxyde de carbone.
+Le journal des analyses ne vit plus sur un téléphone. Il vit dans un **dossier
+Google Drive**, que plusieurs appareils tiennent ensemble.
 
-## Le CO alarme
+## Un cahier commun
 
-Au-delà de **5 ppm** — le seuil de l'ECHO lui-même — un avertissement passe
-devant tout le reste sur l'écran de mesure, et suit la mesure une fois figée.
+Chaque mesure figée puis relâchée entre au journal, avec tout ce que porte
+l'étiquette du registre de gonflage : la bouteille, la date, l'analyste, la
+lecture des capteurs **au centième**, la valeur retenue, le CO, la ppO₂, la MOD,
+les drapeaux de l'appareil, la dérive du dernier contrôle à l'air — et,
+désormais, **quel appareil a mesuré**.
 
-Il **n'interdit rien** : ni de figer, ni d'imprimer. Décider qu'une bouteille
-part à la purge n'appartient pas à un téléphone.
+Chaque appareil tient **son propre fichier** dans le dossier,
+`journal-Pixel-10-Pro-XL.csv`, `journal-SM-X920.csv`. Un seul fichier commun
+aurait l'air plus simple et ne l'est pas : deux appareils qui écrivent le même
+fichier dans un dossier synchronisé produisent tôt ou tard deux versions
+concurrentes, et c'est le service de synchronisation — pas l'application — qui
+décide laquelle survit. Un fichier par appareil rend la collision impossible.
+L'écran, lui, relit tout le dossier et recompose le cahier entier, rangé par
+instant, appareils mêlés.
 
-Un capteur de CO en défaut le dit maintenant, au lieu d'afficher le même tiret
-que « pas de capteur ». Sur le seul contaminant qui tue sans odeur ni goût, un
-silence se lirait « air propre ».
+## Ce qui ne peut pas arriver
 
-## La police de l'imprimante est mesurée
+Trois garanties, et chacune répond à une façon réelle de perdre des lignes.
 
-Le rendu estimait la largeur des textes avec un ratio moyen unique. Il se
-trompait des deux côtés : trop large pour les chiffres, il rabotait la MOD ;
-trop étroit pour les capitales, il réservait aux blocs de texte moins de place
-que les lettres n'en prennent. L'imprimante repliait alors la ligne.
+**Rien ne s'écrase.** Ce qui part vers le dossier est toujours la réunion de ce
+qu'on y lit et de ce qu'on a localement, jamais le seul contenu local. Une
+application réinstallée, ou un « Effacer » local, ne peut donc pas vider le
+cahier de tout le monde — c'est aussi pourquoi « Effacer » ne touche que la
+copie de l'appareil, et le dit.
 
-Une table **mesurée glyphe par glyphe** — 99 caractères, relevés au dot sur un
-moteur qui applique les métriques réelles de la police Zebra — remplace ce
-ratio. Vérifié étiquette par étiquette :
+**Rien ne se perd, pas même l'incompris.** Une ligne que cette version ne sait
+pas relire — écrite par une version postérieure, ou éditée à la main — est
+conservée telle quelle plutôt que jetée. Un format qui jette ce qu'il ne
+comprend pas détruit en silence.
 
-- **seize débordements de ligne avant, aucun après** ;
-- la MOD gagne jusqu'à **26 % de hauteur**, quatre chiffres compris.
+**Rejouer un envoi ne coûte rien.** Deux lignes identiques sont la même mesure,
+et une seule est retenue. C'est toute la gestion du hors connexion : une mesure
+prise au bord d'un bassin sans réseau entre dans le fichier local, qui ne fait
+que croître et qui fait foi, puis part au prochain envoi réussi — dans dix
+secondes ou dans trois jours. L'écran dit combien de mesures attendent encore.
 
-## Trois défauts silencieux
+## Aucune permission de plus
 
-- Une mesure entre 0 et 0,5 % d'oxygène se figeait, puis **n'avait aucune
-  étiquette** : l'écran annonçait « Mesure figée » pendant que celui des
-  étiquettes répondait qu'aucune mesure ne l'était.
-- Une **coupure de liaison propre** laissait l'application sur « En attente »
-  devant un analyseur de nouveau disponible, sans jamais retenter.
-- Un refus de mise en page **fermait l'application** au lieu d'afficher sa
-  raison.
+Le dossier se désigne dans le **sélecteur de fichiers d'Android**, et c'est
+l'application Drive qui le synchronise. Pas d'API Google, pas de compte à
+connecter dans l'application, pas de permission `INTERNET` : le relevé
+`aapt2 dump permissions` de cette version est identique à celui des
+précédentes — deux permissions Bluetooth, et rien d'autre.
 
-## Vos réglages ne quittent plus l'appareil
+Ce sont donc vos mesures, dans votre Drive, sur un dossier que vous avez choisi.
+Mais elles ne restent plus sur l'appareil : lisez l'avertissement du README, il
+a été mis à jour pour le dire.
 
-`allowBackup="false"` fermait la sauvegarde dans le nuage, et couvrait le
-transfert d'appareil à appareil **jusqu'à Android 12**. Il ne le couvre plus :
-l'imprimante retenue, la ppO₂ et le prénom de l'analyste pouvaient suivre vers
-un téléphone neuf pendant sa configuration. Les deux chemins sont désormais
-fermés explicitement.
+## Un barrage au lancement
+
+L'application ne s'ouvre plus tant que le Bluetooth et le dossier ne sont pas
+accordés, et elle redemande tant qu'ils manquent.
+
+Ce n'est pas de la rigueur pour elle-même. Sans Bluetooth, l'écran d'analyse
+attend une trame qui n'arrivera jamais ; sans dossier, les mesures se consignent
+là où personne n'ira les chercher. Dans les deux cas l'application *paraît*
+fonctionner, et c'est cela qu'il fallait empêcher.
+
+Le barrage porte sur l'**autorisation**, jamais sur la joignabilité : un Drive
+hors ligne n'interdit pas de mesurer.
+
+## Depuis la 0.15.0
+
+Les versions 0.16 à 0.18 n'ont pas été publiées ; ce qu'elles contenaient arrive
+ici.
+
+- **Ce que l'appareil dit de lui-même est enfin écouté** : dépassement de plage,
+  température, hélium imprécis. Ces drapeaux remontent jusqu'à l'analyse et
+  suivent la mesure figée. Comme le CO, ils avertissent sans rien interdire.
+- **Le contrôle de cellule à l'air**, retenu d'une session à l'autre, affiché à
+  côté des propositions de rattrapage d'oxygène. Rien n'est appliqué en silence.
+- **La bouteille figure sur l'étiquette du registre**, en tête : elle manquait,
+  et l'on relisait une MOD, une date et un prénom sans savoir à quoi les
+  rapporter.
+- **Le passage au vert s'entend.** Pendant les cinq secondes de calme, les deux
+  mains sont sur le robinet.
+- **Le journal des analyses et la réimpression** : relire une analyse et
+  refaire ses étiquettes sans rebrancher la bouteille. Une étiquette réimprimée
+  le dit, par un bandeau — sans lui, rien ne la distinguerait d'une mesure
+  fraîche.
+- **Trois chemins vers l'imprimante** : les appareils appairés, une recherche
+  menée par l'application, une adresse saisie à la main. Une ZD421t sortie
+  d'usine s'appaire sous son numéro de série, où rien ne rappelle la marque ;
+  et depuis One UI 7, les réglages Bluetooth de Samsung ne listent pas toujours
+  une imprimante que l'application, elle, trouve. L'envoi tente les deux
+  liaisons et **dit par laquelle** l'étiquette est sortie.
+- **La version se lit vraiment sur l'écran de lancement.**
+- **Le plancher passe à Android 13.** La recherche d'imprimante lit les données
+  de l'appareil trouvé par des méthodes typées apparues à cette version ; en
+  deçà, la première imprimante trouvée faisait tomber l'application.
 
 ---
 
-**Lisez le [README](../../blob/main/README.md) avant d'installer.** Cette
-application n'est pas un produit : elle a été écrite pour un seul plongeur, un
-seul analyseur et une seule imprimante, et hors le prénom qui signe les
-étiquettes, elle ne se règle pas. Vous en assumez tous les risques.
+## Ce qui n'a pas été éprouvé
 
-Elle produit des chiffres — profondeur maximale, équivalent narcotique, densité
-— dont dépend votre sécurité. Recoupez-les toujours.
+Le dossier partagé a été vérifié de bout en bout entre un Pixel 10 Pro XL et une
+Galaxy Tab S10 Ultra, sur Google Drive : dossier créé depuis le sélecteur,
+mesure figée puis relâchée, fichier retrouvé dans Drive avec sa colonne
+appareil. Il n'a **pas** été éprouvé sur un autre fournisseur de stockage, ni
+sur un dossier partagé à plusieurs comptes, ni sur deux appareils du **même
+modèle** — ceux-là partageraient un fichier, ce qui se répare de soi-même mais
+n'a pas été observé en conditions réelles.
 
-L'alarme de CO, en particulier, n'a jamais été vue se déclencher sur du vrai
-gaz : le capteur de l'appareil de test est en défaut. Elle a été éprouvée en
-simulation, pas au bord du bassin.
+L'alarme de CO n'a toujours jamais été vue se déclencher sur du vrai gaz : le
+capteur de l'appareil de test est en défaut. Elle a été éprouvée en simulation,
+pas au bord du bassin.
 
 **Application non officielle, sans lien avec Divesoft s.r.o.**
 
 | | |
 |---|---|
-| Version | 0.13.0 |
-| Android minimum | 12 (API 31) |
-| Taille | 6,4 Mo |
-| SHA-256 | `9b8c362d3b0d4587ff5261f9662b5691be5d6bc031538e484756dcf12ad2765d` |
+| Version | 0.19.0 |
+| Android minimum | 13 (API 33) |
+| Taille | 8,2 Mo |
+| SHA-256 | `9b1aca1a774075543a6eabecdb347726b467c6be1f6db469de0f2385a652fe1b` |

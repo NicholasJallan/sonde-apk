@@ -59,9 +59,13 @@ qui signe les étiquettes. Rien d'autre ne se règle — ni option, ni préfére
 - **Français uniquement**, **mètres uniquement**.
 - Elle se connecte au **premier analyseur ECHO qu'elle trouve**. Si plusieurs
   sont allumés à portée, rien ne garantit que ce soit le vôtre.
-- Trois choses seulement survivent à la fermeture : l'imprimante retenue, la
-  ppO₂ choisie et le prénom de l'analyste. Rien d'autre n'est mémorisé, et rien
-  ne quitte jamais le téléphone.
+- Elle **exige un dossier Google Drive** au lancement, et ne s'ouvre pas sans.
+  Le journal des analyses y est consigné, un fichier par appareil, pour que
+  plusieurs téléphones tiennent le même cahier. C'est vous qui désignez le
+  dossier, dans le sélecteur système ; l'application n'a pas la permission
+  réseau et ne choisit rien à votre place — mais **ce que vous y consignez
+  quitte le téléphone**, par l'application Drive. Si vous ne voulez pas de cela,
+  ne l'installez pas : il n'y a pas d'option pour s'en passer.
 
 ## Divesoft
 
@@ -84,12 +88,15 @@ l'installation depuis une source inconnue :
    gestionnaire de fichiers à installer des applications ;
 3. acceptez, puis installez.
 
-**Android 12 minimum**, et un téléphone doté du Bluetooth basse consommation.
+**Android 13 minimum**, et un téléphone doté du Bluetooth basse consommation.
 
-Android 12 plutôt que 8 est un choix délibéré. Les versions antérieures
-exigeaient la permission de **localisation** pour tout scan Bluetooth, et
-l'autorisation dont dépend la sélection d'imprimante n'y existe pas : l'app y
-aurait réclamé davantage pour en faire moins. Mieux vaut ne pas s'installer que
+Android 13 plutôt que 8 est un choix délibéré, en deux temps. En deçà
+d'Android 12, tout scan Bluetooth exigeait la permission de **localisation**, et
+l'autorisation dont dépend la sélection d'imprimante n'existait pas : l'app y
+aurait réclamé davantage pour en faire moins. Le pas de 12 à 13 est venu de la
+recherche d'imprimante, qui lit les données de l'appareil trouvé par des
+méthodes **typées** apparues à cette version ; sous 13, la première imprimante
+trouvée faisait tomber l'application. Mieux vaut ne pas s'installer que
 s'installer à moitié.
 
 L'application n'a par ailleurs été **éprouvée que sur Android 16**.
@@ -99,7 +106,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.12.0.apk
+shasum -a 256 sonde-0.19.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -112,11 +119,18 @@ Un APK signé par une autre clé ne vient pas d'ici.
 
 ## Permissions demandées
 
-L'application **n'accède pas au réseau** — elle n'en a pas la permission, et ne
-peut donc rien transmettre nulle part. Aucune donnée n'est collectée, aucune
-mesure n'est envoyée, aucune statistique n'est levée.
+L'application **n'a pas la permission réseau** : elle ne peut d'elle-même
+joindre aucun serveur. Aucune donnée n'est collectée, aucune statistique n'est
+levée, et rien n'est envoyé à l'auteur ni à personne d'autre.
 
-Elle en demande **deux**, et rien d'autre :
+Une réserve, et elle est importante : depuis la 0.19.0, le **journal des
+analyses** est écrit dans un dossier Google Drive **que vous désignez
+vous-même**, par le sélecteur de fichiers d'Android. L'application n'y accède
+qu'à travers l'autorisation que vous lui donnez sur ce dossier-là, et c'est
+l'application Drive — pas celle-ci — qui le synchronise. Ce sont donc vos
+mesures, dans votre Drive, mais elles ne restent plus sur l'appareil.
+
+Elle demande **deux** permissions, et rien d'autre :
 
 | Permission | Pourquoi |
 |---|---|
@@ -124,10 +138,12 @@ Elle en demande **deux**, et rien d'autre :
 | `BLUETOOTH_CONNECT` | dialoguer avec l'analyseur et avec l'imprimante |
 
 Pas de localisation, pas de stockage, pas de réseau, pas de caméra, pas de
-contacts. C'est vérifiable sur le fichier lui-même :
+contacts — l'accès au dossier du journal n'en demande aucune, il passe par le
+cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
+C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.12.0.apk
+aapt2 dump permissions sonde-0.19.0.apk
 ```
 
 ## Licence et droits
