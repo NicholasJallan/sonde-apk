@@ -1,7 +1,8 @@
 # Sonde — APK
 
 Application Android qui lit l'analyseur de gaz **Divesoft ECHO** en Bluetooth et
-imprime les étiquettes de bouteilles correspondantes sur une **Zebra ZD421t**.
+imprime les étiquettes de bouteilles correspondantes sur une **Zebra ZD421**, à
+ruban (ZD421t) ou à cartouche (ZD421c).
 
 Ce dépôt ne contient qu'un fichier installable. Le code source n'est pas publié.
 
@@ -45,14 +46,16 @@ n'est pas éprouvé :
 | **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil et un seul firmware**. Sur un autre, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
 | **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
+| **Impression en Bluetooth basse consommation** | C'est la voie d'impression principale, et la seule d'une ZD421c. Zebra la présente pourtant comme réservée à son application de configuration. Éprouvée sur **une ZD421t et une ZD421c**, depuis un seul téléphone ; une mise à jour du micrologiciel de l'imprimante pourrait la fermer. La liaison série reste en secours sur les machines qui l'ont. |
 
 ### Ce qu'elle ne sait pas faire
 
 L'application n'a **qu'un seul champ** : le prénom de la personne qui analyse,
 qui signe les étiquettes. Rien d'autre ne se règle — ni option, ni préférence.
 
-- **Un seul modèle d'imprimante** : Zebra ZD421t à 203 dpi. Sur une imprimante
-  300 dpi, les étiquettes sortiraient aux deux tiers de leur taille.
+- **Une seule famille d'imprimantes** : Zebra ZD421, à ruban ou à cartouche, à
+  203 dpi. Sur une imprimante 300 dpi, les étiquettes sortiraient aux deux tiers
+  de leur taille.
 - **Deux formats d'étiquettes** seulement : 100 × 150 mm et 76 × 51 mm.
 - **Les étiquettes portent la marque de l'auteur**, imprimée en dur. Vous ne
   pouvez pas la retirer ni la remplacer par la vôtre.
@@ -106,7 +109,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.19.2.apk
+shasum -a 256 sonde-0.21.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -134,7 +137,7 @@ Elle demande **deux** permissions, et rien d'autre :
 
 | Permission | Pourquoi |
 |---|---|
-| `BLUETOOTH_SCAN` | trouver l'analyseur. Déclarée `neverForLocation` : Android lui interdit alors d'en déduire une position, et le système le garantit |
+| `BLUETOOTH_SCAN` | trouver l'analyseur et les imprimantes. Déclarée `neverForLocation` : Android lui interdit alors d'en déduire une position, et le système le garantit |
 | `BLUETOOTH_CONNECT` | dialoguer avec l'analyseur et avec l'imprimante |
 
 Pas de localisation, pas de stockage, pas de réseau, pas de caméra, pas de
@@ -143,7 +146,7 @@ cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
 C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.19.2.apk
+aapt2 dump permissions sonde-0.21.0.apk
 ```
 
 ## Licence et droits

@@ -1,156 +1,116 @@
-# Note de version — 0.19.2
+# Note de version — 0.21.0
 
 Texte à coller dans la description de la version GitHub.
 
 ---
 
-Le journal des analyses ne vit plus sur un téléphone. Il vit dans un **dossier
-Google Drive**, que plusieurs appareils tiennent ensemble.
+L'impression passe désormais par le **Bluetooth basse consommation**. Une
+**ZD421c** — la ZD421 à cartouche de ruban — imprime donc comme une ZD421t,
+sans appairage et sans module à ajouter. Et cette version porte aussi la
+refonte des écrans préparée pour la 0.20.0, qui n'avait pas été publiée.
 
-> **La 0.19.0 et la 0.19.1 ne doivent pas servir.** Deux défauts les rendaient
-> inaptes au cahier commun, et ils sont décrits plus bas. Installer celle-ci.
+## Deux imprimantes, deux radios
 
-## Un cahier commun
+Une ZD421 n'a pas toujours de Bluetooth classique. La seconde imprimante de
+l'atelier, une ZD421c en référence `ZD4A042-C0EE00EZ`, n'a qu'un port Ethernet
+et la radio basse consommation montée d'usine sur toutes les ZD421. Le profil
+série par lequel l'application imprimait jusqu'ici n'y existe pas : Android la
+classe en basse consommation seule, l'appel en Bluetooth classique reste sans
+réponse, et son réglage n'offre pas d'autre mode.
 
-Chaque mesure figée puis relâchée entre au journal, avec tout ce que porte
-l'étiquette du registre de gonflage : la bouteille, la date, l'analyste, la
-lecture des capteurs **au centième**, la valeur retenue, le CO, la ppO₂, la MOD,
-les drapeaux de l'appareil, la dérive du dernier contrôle à l'air — et,
-désormais, **quel appareil a mesuré**.
+Zebra présente cette radio comme réservée à son application de configuration.
+Elle porte pourtant un **service d'impression**, décrit dans une note
+technique de Zebra et repris par son kit de développement Android. C'est par
+lui que l'application imprime maintenant, d'abord, sur toute imprimante qui
+l'a :
 
-Chaque appareil tient **son propre fichier** dans le dossier,
-`journal-Pixel-10-Pro-XL.csv`, `journal-SM-X920.csv`. Un seul fichier commun
-aurait l'air plus simple et ne l'est pas : deux appareils qui écrivent le même
-fichier dans un dossier synchronisé produisent tôt ou tard deux versions
-concurrentes, et c'est le service de synchronisation — pas l'application — qui
-décide laquelle survit. Un fichier par appareil rend la collision impossible.
-L'écran, lui, relit tout le dossier et recompose le cahier entier, rangé par
-instant, appareils mêlés.
+- **la radio d'Android décide de l'ordre** : basse consommation seule pour une
+  machine qui n'a qu'elle, basse consommation puis liaison série pour une
+  machine qui a les deux, liaison série seule pour une Zebra plus ancienne ;
+- **aucun appairage** sur la nouvelle voie ;
+- **chaque morceau est acquitté** par l'imprimante : la fin de l'envoi se sait,
+  au lieu de s'attendre ;
+- **l'écran dit toujours par où l'étiquette est sortie** — « Bluetooth basse
+  consommation », « liaison série », « liaison série sans appairage ».
 
-## Ce qui ne peut pas arriver
+Le débit est modeste, et c'est sans importance : une étiquette de col ou de
+diluent part en une seconde, l'étiquette du bailout qui porte le logo en une
+dizaine.
 
-Trois garanties, et chacune répond à une façon réelle de perdre des lignes.
+## Une imprimante pas prête refuse l'étiquette
 
-**Rien ne s'écrase.** Ce qui part vers le dossier est toujours la réunion de ce
-qu'on y lit et de ce qu'on a localement, jamais le seul contenu local. Une
-application réinstallée, ou un « Effacer » local, ne peut donc pas vider le
-cahier de tout le monde — c'est aussi pourquoi « Effacer » ne touche que la
-copie de l'appareil, et le dit.
+Avant chaque envoi, l'application demande son état à l'imprimante. Tête
+ouverte, plus de papier, plus de ruban, imprimante en pause : **rien ne part**,
+et l'écran dit pourquoi.
 
-**Rien ne se perd, pas même l'incompris.** Une ligne que cette version ne sait
-pas relire — écrite par une version postérieure, ou éditée à la main — est
-conservée telle quelle plutôt que jetée. Un format qui jette ce qu'il ne
-comprend pas détruit en silence.
+Ce n'est pas un confort. Une Zebra dont la tête est ouverte accepte
+l'étiquette, la garde en mémoire et l'imprime à la fermeture — plus tard,
+devant une autre bouteille peut-être, sans que l'écran ait jamais dit qu'elle
+attendait.
 
-**Rejouer un envoi ne coûte rien.** Deux lignes identiques sont la même mesure,
-et une seule est retenue. C'est toute la gestion du hors connexion : une mesure
-prise au bord d'un bassin sans réseau entre dans le fichier local, qui ne fait
-que croître et qui fait foi, puis part au prochain envoi réussi — dans dix
-secondes ou dans trois jours. L'écran dit combien de mesures attendent encore.
+Un état qui ne se lit pas n'empêche rien : on ne refuse pas d'imprimer sur une
+ignorance.
 
-## Aucune permission de plus
+## Trouver une Zebra, même cachée
 
-Le dossier se désigne dans le **sélecteur de fichiers d'Android**, et c'est
-l'application Drive qui le synchronise. Pas d'API Google, pas de compte à
-connecter dans l'application, pas de permission `INTERNET` : le relevé
-`aapt2 dump permissions` de cette version est identique à celui des
-précédentes — deux permissions Bluetooth, et rien d'autre.
+Les Zebra publient en basse consommation un identifiant que le Bluetooth SIG
+attribue à Zebra. La recherche de l'écran **Imprimantes** l'écoute désormais
+en plus de la recherche classique, et marque « Zebra (BLE) » ce qui s'y
+annonce. Une machine dont la découverte classique est coupée — ce que Zebra
+recommande hors usage — y apparaît quand même.
 
-Ce sont donc vos mesures, dans votre Drive, sur un dossier que vous avez choisi.
-Mais elles ne restent plus sur l'appareil : lisez l'avertissement du README, il
-a été mis à jour pour le dire.
+## Des écrans repensés
 
-## Un barrage au lancement
+- **Une barre en bas du téléphone** : Analyse, Étiquettes, Journal, et « Plus »
+  pour les imprimantes, le diagnostic et la simulation. Sur tablette, le menu
+  reste permanent.
+- **Une pastille d'état** dans la barre du haut, sur tous les écrans :
+  l'analyseur, ou `SIMULÉ` ; les mesures en attente d'envoi au journal.
+- **Analyse** : la cible se centre tant que le gaz bouge, et le nom de qui
+  analyse tient sur la ligne de la liaison.
+- **Étiquettes** : une barre d'action fixe — « Imprimer les 2 étiquettes »
+  (celles qui ne sont pas encore sorties), « Choisir une imprimante »,
+  « Bouteille suivante » une fois tout sorti.
+- **Imprimantes** : une carte par support, une seule liste d'appareils qui dit
+  ce que chacun imprime.
+- **Journal** : rangé par jour, avec une recherche par bouteille ou mélange ;
+  sur tablette, la liste à gauche et le détail à droite.
+- Un thème tiré de la palette de l'application, une échelle de textes, des
+  chiffres qui ne dansent plus.
 
-L'application ne s'ouvre plus tant que le Bluetooth et le dossier ne sont pas
-accordés, et elle redemande tant qu'ils manquent.
+## Ce qui a été corrigé
 
-Ce n'est pas de la rigueur pour elle-même. Sans Bluetooth, l'écran d'analyse
-attend une trame qui n'arrivera jamais ; sans dossier, les mesures se consignent
-là où personne n'ira les chercher. Dans les deux cas l'application *paraît*
-fonctionner, et c'est cela qu'il fallait empêcher.
-
-Le barrage porte sur l'**autorisation**, jamais sur la joignabilité : un Drive
-hors ligne n'interdit pas de mesurer.
-
-## Corrigé depuis la 0.19.0
-
-Deux défauts, trouvés en éprouvant le dispositif entre un téléphone et une
-tablette. Le second est le plus grave.
-
-**Un dossier local passait pour un dossier partagé.** Le sélecteur système mêle
-Drive, le stockage de l'appareil et le reste, et il s'ouvre sur le stockage
-local : un dossier interne se choisissait en deux gestes, l'application y
-écrivait sans broncher, et l'écran continuait d'annoncer « dossier partagé »
-devant un dossier que personne d'autre ne verrait jamais. L'application lit
-désormais la provenance du dossier, **refuse** le stockage de l'appareil au
-moment du choix, et nomme la source à l'écran — « Google Drive · mon_dossier ».
-Une source qu'elle ne sait pas nommer passe, avec un avertissement : refuser sur
-une ignorance fermerait la porte à tout service qui n'est pas Drive.
-
-**Les fichiers des autres appareils n'étaient pas lus.** Le contenu du dossier
-était parcouru en lisant les colonnes par leur rang. Un fournisseur de documents
-n'est pas tenu de les rendre dans l'ordre demandé, et Drive ne le fait pas : le
-dossier paraissait vide alors que le sélecteur système y montrait les fichiers.
-Les colonnes se lisent maintenant par leur nom.
-
-Ce second défaut en cachait un troisième, et c'est celui qui aurait pu coûter :
-un échec de lecture était avalé et rendait une liste vide, si bien que la
-réunion prenait un fichier illisible pour un fichier vide — et la réécriture qui
-suit l'aurait **effacé**. La garantie « rien ne s'écrase » tombait en silence.
-Une lecture qui échoue interrompt désormais l'envoi, et l'écran le dit.
-
-## Depuis la 0.15.0
-
-Les versions 0.16 à 0.18 n'ont pas été publiées ; ce qu'elles contenaient arrive
-ici.
-
-- **Ce que l'appareil dit de lui-même est enfin écouté** : dépassement de plage,
-  température, hélium imprécis. Ces drapeaux remontent jusqu'à l'analyse et
-  suivent la mesure figée. Comme le CO, ils avertissent sans rien interdire.
-- **Le contrôle de cellule à l'air**, retenu d'une session à l'autre, affiché à
-  côté des propositions de rattrapage d'oxygène. Rien n'est appliqué en silence.
-- **La bouteille figure sur l'étiquette du registre**, en tête : elle manquait,
-  et l'on relisait une MOD, une date et un prénom sans savoir à quoi les
-  rapporter.
-- **Le passage au vert s'entend.** Pendant les cinq secondes de calme, les deux
-  mains sont sur le robinet.
-- **Le journal des analyses et la réimpression** : relire une analyse et
-  refaire ses étiquettes sans rebrancher la bouteille. Une étiquette réimprimée
-  le dit, par un bandeau — sans lui, rien ne la distinguerait d'une mesure
-  fraîche.
-- **Trois chemins vers l'imprimante** : les appareils appairés, une recherche
-  menée par l'application, une adresse saisie à la main. Une ZD421t sortie
-  d'usine s'appaire sous son numéro de série, où rien ne rappelle la marque ;
-  et depuis One UI 7, les réglages Bluetooth de Samsung ne listent pas toujours
-  une imprimante que l'application, elle, trouve. L'envoi tente les deux
-  liaisons et **dit par laquelle** l'étiquette est sortie.
-- **La version se lit vraiment sur l'écran de lancement.**
-- **Le plancher passe à Android 13.** La recherche d'imprimante lit les données
-  de l'appareil trouvé par des méthodes typées apparues à cette version ; en
-  deçà, la première imprimante trouvée faisait tomber l'application.
+- Un envoi en cours écrivait « envoyé » à côté d'une étiquette qui avait changé
+  pendant l'envoi, et une série continuait d'imprimer l'ancienne. Ce n'est plus
+  possible : seule l'étiquette affichée au départ peut être déclarée sortie.
+- Une analyse simulée relue du journal se réimprimait sans le dire. Elle est
+  désormais **refusée** dans cette version.
+- « Effacer l'appareil » pouvait perdre sans confirmation des mesures pas
+  encore versées au dossier, et s'offrir devant un dossier qui venait de
+  changer.
+- Une écriture du journal qui échouait passait en silence.
+- Les notations de mélange ne dépendent plus de la langue de l'appareil.
 
 ---
 
 ## Ce qui n'a pas été éprouvé
 
-Le dossier partagé a été vérifié de bout en bout entre un Pixel 10 Pro XL et une
-Galaxy Tab S10 Ultra, sur Google Drive : dossier créé depuis le sélecteur,
-mesure figée sur le téléphone puis relâchée, et **relue sur la tablette** avec
-sa colonne appareil. Il n'a **pas** été éprouvé sur un autre fournisseur de stockage, ni
-sur un dossier partagé à plusieurs comptes, ni sur deux appareils du **même
-modèle** — ceux-là partageraient un fichier, ce qui se répare de soi-même mais
-n'a pas été observé en conditions réelles.
+L'impression par la basse consommation a été vérifiée **sur deux machines** :
+une ZD421t (Link-OS 6.6) et une ZD421c (Link-OS 7.1), depuis un Pixel 10 Pro XL
+— grand format, bailout avec logo, col, et refus capot ouvert. Elle ne l'a été
+ni sur une autre Zebra, ni depuis une tablette, ni après une mise à jour du
+micrologiciel de l'imprimante. Zebra ne présente pas cette voie comme une voie
+d'impression : une mise à jour pourrait la fermer. La liaison série reste alors
+en secours — sur les machines qui l'ont.
 
 L'alarme de CO n'a toujours jamais été vue se déclencher sur du vrai gaz : le
-capteur de l'appareil de test est en défaut. Elle a été éprouvée en simulation,
-pas au bord du bassin.
+capteur de l'appareil de test est en défaut.
 
 **Application non officielle, sans lien avec Divesoft s.r.o.**
 
 | | |
 |---|---|
-| Version | 0.19.2 |
+| Version | 0.21.0 |
 | Android minimum | 13 (API 33) |
 | Taille | 8,3 Mo |
-| SHA-256 | `83e64d418aeae9537e54710ee1c0af566dc5d321dad3e7eca8b66ec0627a6273` |
+| SHA-256 | `46d1bcc3ac54129374f1bf488369f711dcd45dd1f1609e7395e59a954e7be7c3` |
