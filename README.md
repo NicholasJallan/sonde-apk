@@ -46,7 +46,7 @@ n'est pas éprouvé :
 | **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil et un seul firmware**. Sur un autre, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
 | **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
-| **Impression en Bluetooth basse consommation** | C'est la voie d'impression principale, et la seule d'une ZD421c. Zebra la présente pourtant comme réservée à son application de configuration. Éprouvée sur **une ZD421t et une ZD421c**, depuis un seul téléphone ; une mise à jour du micrologiciel de l'imprimante pourrait la fermer. La liaison série reste en secours sur les machines qui l'ont. |
+| **Impression en Bluetooth basse consommation** | C'est la **seule** voie d'impression. Zebra la présente pourtant comme réservée à son application de configuration. Éprouvée sur **une ZD421t et une ZD421c**, depuis un téléphone et une tablette ; une mise à jour du micrologiciel de l'imprimante pourrait la fermer, et il n'y aurait alors plus que l'export d'un fichier ZPL. |
 
 ### Ce qu'elle ne sait pas faire
 
@@ -60,6 +60,9 @@ qui signe les étiquettes. Rien d'autre ne se règle — ni option, ni préfére
 - **Les étiquettes portent la marque de l'auteur**, imprimée en dur. Vous ne
   pouvez pas la retirer ni la remplacer par la vôtre.
 - **Français uniquement**, **mètres uniquement**.
+- **N'appairez pas l'imprimante** dans les réglages Bluetooth du téléphone :
+  l'application n'en a pas besoin, et une imprimante appairée devient
+  injoignable depuis les autres appareils.
 - Elle se connecte au **premier analyseur ECHO qu'elle trouve**. Si plusieurs
   sont allumés à portée, rien ne garantit que ce soit le vôtre.
 - Elle **exige un dossier Google Drive** au lancement, et ne s'ouvre pas sans.
@@ -109,7 +112,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.21.0.apk
+shasum -a 256 sonde-0.22.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -146,7 +149,7 @@ cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
 C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.21.0.apk
+aapt2 dump permissions sonde-0.22.0.apk
 ```
 
 ## Licence et droits
