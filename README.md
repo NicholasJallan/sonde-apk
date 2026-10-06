@@ -43,7 +43,7 @@ n'est pas éprouvé :
 | Point | État réel |
 |---|---|
 | **Largeur imprimable** | Le flux suppose une tête de 100 mm utile. À confirmer : la tête 4 pouces de la ZD421t en couvre un peu plus. |
-| **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil et un seul firmware**. Sur un autre, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
+| **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil**, à travers **une** mise à jour de son micrologiciel, qui n'a rien cassé — rien ne garantit les suivantes. Sur un autre appareil, ou après une autre mise à jour, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
 | **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
 | **Imprimantes à 300 dpi** | L'application demande sa résolution à l'imprimante et rend l'étiquette pour elle. Ce rendu n'a **jamais été imprimé** : il est vérifié par le calcul, pas sur papier. Une imprimante qui ne répond pas est servie à 203 dpi — sur une 300 dpi, l'étiquette sortirait alors aux deux tiers de sa taille, et l'envoi le signale. **Vérifiez votre première étiquette.** |
