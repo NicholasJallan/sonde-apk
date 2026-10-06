@@ -1,99 +1,66 @@
-# Note de version — 0.23.1
+# Note de version — 0.24.0
 
 Texte à coller dans la description de la version GitHub.
 
 ---
 
-Une version de correction, issue d'une relecture complète de la 0.22 et de
-deux séances de mesures sur le matériel. Elle ne change pas l'usage : elle
-retire des façons de se tromper sans le savoir.
+Une version d'ajout : **une seule imprimante suffit désormais**, et
+l'application apprend à servir les Zebra ZD421 à **300 dpi**. Un écran de
+réglages fait son apparition — deux réglages, et aucun qui touche à la
+sécurité.
 
-> La 0.23.0 n'a pas été publiée : tout ce qui suit la complète.
+## Un écran « Réglages »
 
-## Les chiffres
+- **Le nom imprimé par défaut** sur les étiquettes. Le champ de l'écran
+  d'analyse sert toujours, pour un analyste de passage, mais il ne vaut plus
+  que pour la session : au lancement suivant, on retrouve le nom par défaut.
+  Une installation neuve n'en a aucun ; une installation existante garde le
+  sien.
+- **Une imprimante ou deux.** À deux, rien ne change : le corps sur une
+  100 × 150, le col et le registre sur une 76 × 51.
+- La **résolution** de chaque imprimante retenue s'y lit — elle ne s'y règle
+  pas, voir plus bas.
 
-- **Le pour cent retenu se tire du dixième affiché.** Une lecture affichée
-  « 28,5 » donnait parfois NX28 sur l'étiquette : l'arrondi se faisait sur une
-  valeur que l'écran ne montrait pas. Écran, étiquettes, registre et journal
-  passent désormais tous par le même arrondi.
-- **La MOD et l'équivalent narcotique sont ceux des tables.** La virgule
-  flottante faisait tomber environ un mélange sur vingt-cinq un mètre trop
-  bas ou trop haut, à la frontière d'un arrondi. La MOD reste arrondie au
-  mètre inférieur, le seul arrondi qui ne promet jamais plus profond que le
-  calcul.
-- Le panneau en direct montre la MOD du mélange **qui sera retenu**, et non
-  celle de la lecture brute : on ne voit plus 39 m avant de figer et 40 m après.
+Ni ppO₂, ni seuil, ni arrondi n'y figurent : ce sont des décisions prises
+bouteille par bouteille, ou celles de l'analyseur.
 
-## L'analyseur
+## Une seule imprimante
 
-- **L'ECHO se reconnaît à l'identifiant que le Bluetooth SIG attribue à
-  Divesoft**, et non plus à son nom : une enceinte Amazon « Echo » n'est plus
-  prise pour un analyseur.
-- **Votre ECHO est retenu.** Le dernier analyseur avec lequel la mesure a
-  tourné est mémorisé par son adresse. S'il est à portée, c'est lui ; si un
-  autre répond seul, l'application l'attend cinq secondes, puis se lie à
-  l'autre — et le nom de l'appareil lié s'affiche toujours en tête de l'écran.
-- Une liaison qui ne livre plus de mesures pendant dix secondes échoue et se
-  relance, au lieu de laisser l'écran figé sur une valeur ancienne.
-- Ouvrir l'application deux fois — par un raccourci, par exemple — ne crée plus
-  deux sessions qui se disputent l'analyseur.
+- Tout sort du rouleau **100 × 150**. Le col et le registre partagent une même
+  étiquette, l'un au-dessus de l'autre, séparés par un **trait de coupe**
+  pointillé : on coupe, et chaque moitié porte son étiquette entière.
+- Les deux étiquettes sont **exactement** celles du 76 × 51, au point près,
+  centrées dans 12 mm de blanc — rien n'a été recomposé.
+- Le travail d'une bouteille sort **d'un seul geste** : le corps, puis le col
+  et le registre. « Bouteille suivante » n'apparaît qu'une fois le col sorti ;
+  on ne peut plus passer à la suite en l'oubliant.
+- On bascule d'un mode à l'autre quand on veut — sauf au milieu d'une
+  bouteille dont des étiquettes sont déjà sorties. Les imprimantes de l'autre
+  mode restent retenues.
 
-## L'imprimante
+## 300 dpi
 
-- **« Imprimer quand même »** sur un rouleau dont la longueur ne correspond
-  pas à l'étiquette, quand c'est le seul problème : la confirmation nomme les
-  deux longueurs, et le journal garde la trace. Un capot ouvert, un papier ou
-  un ruban épuisé, une pause, ne se contournent jamais.
-- **Vider la file** de l'imprimante après une coupure en plein envoi, depuis
-  l'application, au lieu de l'éteindre.
-- « Imprimer les 2 étiquettes » **s'arrête à la première qui n'est pas
-  sortie**, au lieu d'envoyer la suivante derrière un reste.
-- La recherche **dit quand elle n'a pas pu écouter** — Bluetooth éteint,
-  balayage refusé — au lieu de conclure qu'il n'y a pas d'imprimante. Les
-  appareils écartés se montrent, repliés, et se choisissent : une Zebra au
-  préfixe d'adresse inconnu peut s'y trouver.
-- Une imprimante éteinte depuis la dernière recherche reste listée, mais sans
-  puissance de signal : elle ne paraît plus répondre.
-- **Une imprimante qui demande une association** coupe la liaison au bout de
-  trente secondes. Le message le dit désormais, avec le remède. Le cas s'est
-  produit : une ZD421t gardait en mémoire un appairage qu'on avait défait côté
-  téléphone seulement, et réclamait une association à ce téléphone-là à chaque
-  connexion. **Ne l'acceptez pas** ; videz le cache d'associations de
-  l'imprimante (commande SGD `bluetooth.clear_bonding_cache`).
+- Avant chaque envoi, l'application **demande sa résolution à l'imprimante**,
+  et l'étiquette part rendue pour elle : à 300 dpi, le même dessin agrandi
+  d'une fois et demie, logos compris (tirés de leurs sources, pas agrandis).
+  Le contrôle de rouleau se fait dans l'unité de la machine.
+- Une imprimante qui ne dit pas sa résolution est servie à 203 dpi, et l'envoi
+  le signale ; son refus de rouleau ne se lève alors plus sur confirmation.
+- **Le rendu à 300 dpi n'a encore jamais été imprimé.** Il est vérifié par le
+  calcul — tous les mélanges, sans débordement ni chevauchement —, pas sur
+  papier. Voir l'avertissement.
+- L'export d'un fichier ZPL prend la dernière résolution lue sur l'imprimante
+  du support, et le dit.
 
-## Le journal
+## À savoir
 
-- Chaque étiquette sortie est consignée **avec le mélange et la ppO₂ de son
-  envoi**. Un rattrapage d'oxygène fait après l'impression, sans réimprimer,
-  se signale dans la liste.
-- **Le fichier partagé se relit après chaque écriture.** Rien ne compte comme
-  envoyé qui ne se relit pas à l'identique : une écriture coupée ne peut plus
-  laisser croire que le dossier a tout reçu, et « Effacer l'appareil » reste
-  fermé tant que ce n'est pas le cas.
-- Une copie locale illisible ne passe plus pour vide, et ne s'efface pas.
-- **Une mesure que le journal n'a pas pu écrire se dit sur tous les écrans**,
-  par un bandeau rouge qui mène au journal.
+- L'étiquette au logo pèse deux fois plus à 300 dpi : comptez une vingtaine de
+  secondes d'envoi au lieu de dix.
 
-## La simulation
-
-Le simulateur n'existe pas dans ce fichier. Dans la version de développement,
-**rien de simulé ne part plus vers une imprimante** : le papier ne dit pas
-« simulé », et une étiquette sortie se colle sur une bouteille.
-
----
-
-## Ce qui n'a pas été éprouvé
-
-La coupure en plein envoi a été provoquée sur la ZD421t : la machine abandonne
-d'elle-même l'étiquette coupée. Ce que l'état de l'imprimante dit d'un travail
-en attente n'a donc jamais été vu levé, et ne fait qu'avertir.
-
-« Imprimer quand même » a été éprouvé sur la ZD421c ; le retour au bon rouleau
-entre le refus et la confirmation ne l'a pas été sur papier.
-
-Zebra présente ce Bluetooth comme réservé à son application de configuration :
-une mise à jour du micrologiciel pourrait fermer cette voie, et il n'y en a
-plus d'autre. L'export d'un fichier ZPL reste possible.
+Zebra présente le Bluetooth basse consommation de la ZD421 comme réservé à son
+application de configuration : une mise à jour du micrologiciel pourrait
+fermer cette voie, et il n'y en a plus d'autre. L'export d'un fichier ZPL
+reste possible.
 
 L'alarme de CO n'a toujours jamais été vue se déclencher sur du vrai gaz : le
 capteur de l'appareil de test est en défaut.
@@ -102,7 +69,7 @@ capteur de l'appareil de test est en défaut.
 
 | | |
 |---|---|
-| Version | 0.23.1 |
+| Version | 0.24.0 |
 | Android minimum | 13 (API 33) |
-| Taille | 8,4 Mo |
-| SHA-256 | `3868e1ee51b553795b3de09be32336c36a163bfa56c95fa3f454844a519071ba` |
+| Taille | 8,8 Mo |
+| SHA-256 | `0107f21464a8f99ed0b9de6f1317e92a18caad49d944d0cfb87e42b3d2a0ee0a` |

@@ -2,7 +2,7 @@
 
 Application Android qui lit l'analyseur de gaz **Divesoft ECHO** en Bluetooth et
 imprime les étiquettes de bouteilles correspondantes sur une **Zebra ZD421**, à
-ruban (ZD421t) ou à cartouche (ZD421c).
+ruban (ZD421t) ou à cartouche (ZD421c) — ou sur deux.
 
 Ce dépôt ne contient qu'un fichier installable. Le code source n'est pas publié.
 
@@ -46,17 +46,19 @@ n'est pas éprouvé :
 | **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil et un seul firmware**. Sur un autre, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
 | **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
+| **Imprimantes à 300 dpi** | L'application demande sa résolution à l'imprimante et rend l'étiquette pour elle. Ce rendu n'a **jamais été imprimé** : il est vérifié par le calcul, pas sur papier. Une imprimante qui ne répond pas est servie à 203 dpi — sur une 300 dpi, l'étiquette sortirait alors aux deux tiers de sa taille, et l'envoi le signale. **Vérifiez votre première étiquette.** |
 | **Impression en Bluetooth basse consommation** | C'est la **seule** voie d'impression. Zebra la présente pourtant comme réservée à son application de configuration. Éprouvée sur **une ZD421t et une ZD421c**, depuis un téléphone et une tablette ; une mise à jour du micrologiciel de l'imprimante pourrait la fermer, et il n'y aurait alors plus que l'export d'un fichier ZPL. |
 
 ### Ce qu'elle ne sait pas faire
 
-L'application n'a **qu'un seul champ** : le prénom de la personne qui analyse,
-qui signe les étiquettes. Rien d'autre ne se règle — ni option, ni préférence.
+L'application n'a que **deux réglages** : le nom imprimé par défaut sur les
+étiquettes, et une imprimante ou deux. Rien d'autre ne se règle.
 
 - **Une seule famille d'imprimantes** : Zebra ZD421, à ruban ou à cartouche, à
-  203 dpi. Sur une imprimante 300 dpi, les étiquettes sortiraient aux deux tiers
-  de leur taille.
-- **Deux formats d'étiquettes** seulement : 100 × 150 mm et 76 × 51 mm.
+  203 dpi — éprouvée — ou à 300 dpi — prise en charge, jamais imprimée.
+- **Deux formats d'étiquettes** seulement : 100 × 150 mm et 76 × 51 mm. Avec
+  une seule imprimante, tout sort sur le 100 × 150, le col et le registre
+  partageant une étiquette à couper au trait.
 - **Les étiquettes portent la marque de l'auteur**, imprimée en dur. Vous ne
   pouvez pas la retirer ni la remplacer par la vôtre.
 - **Français uniquement**, **mètres uniquement**.
@@ -116,7 +118,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.23.1.apk
+shasum -a 256 sonde-0.24.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -153,7 +155,7 @@ cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
 C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.23.1.apk
+aapt2 dump permissions sonde-0.24.0.apk
 ```
 
 ## Licence et droits
