@@ -1,83 +1,95 @@
-# Note de version — 0.22.0
+# Note de version — 0.23.1
 
 Texte à coller dans la description de la version GitHub.
 
 ---
 
-L'impression ne passe plus que par le **Bluetooth basse consommation**, et
-chaque échec dit maintenant ce qui s'est passé, si quelque chose est parti, et
-quoi faire.
+Une version de correction, issue d'une relecture complète de la 0.22 et de
+deux séances de mesures sur le matériel. Elle ne change pas l'usage : elle
+retire des façons de se tromper sans le savoir.
 
-## Une seule voie, sans appairage
+> La 0.23.0 n'a pas été publiée : tout ce qui suit la complète.
 
-La liaison série Bluetooth des versions précédentes est retirée. Elle ne
-servait qu'à la ZD421t — la ZD421c n'en a pas —, ne pouvait pas lire l'état de
-l'imprimante, ne savait pas quand l'envoi était fini, et poussait à
-l'appairage.
+## Les chiffres
 
-Or une imprimante appairée est **tenue par Android** : le téléphone garde une
-liaison ouverte avec elle, et elle cesse de répondre aux autres appareils. Une
-tablette ne voyait plus la ZD421t appairée au téléphone.
+- **Le pour cent retenu se tire du dixième affiché.** Une lecture affichée
+  « 28,5 » donnait parfois NX28 sur l'étiquette : l'arrondi se faisait sur une
+  valeur que l'écran ne montrait pas. Écran, étiquettes, registre et journal
+  passent désormais tous par le même arrondi.
+- **La MOD et l'équivalent narcotique sont ceux des tables.** La virgule
+  flottante faisait tomber environ un mélange sur vingt-cinq un mètre trop
+  bas ou trop haut, à la frontière d'un arrondi. La MOD reste arrondie au
+  mètre inférieur, le seul arrondi qui ne promet jamais plus profond que le
+  calcul.
+- Le panneau en direct montre la MOD du mélange **qui sera retenu**, et non
+  celle de la lecture brute : on ne voit plus 39 m avant de figer et 40 m après.
 
-**N'appairez pas votre imprimante.** Si elle l'est déjà, oubliez-la dans les
-réglages Bluetooth du téléphone : Sonde n'en a pas besoin, et chaque envoi
-ouvre sa liaison puis la referme en quelques secondes.
+## L'analyseur
 
-## Trouver une Zebra
+- **L'ECHO se reconnaît à l'identifiant que le Bluetooth SIG attribue à
+  Divesoft**, et non plus à son nom : une enceinte Amazon « Echo » n'est plus
+  prise pour un analyseur.
+- **Votre ECHO est retenu.** Le dernier analyseur avec lequel la mesure a
+  tourné est mémorisé par son adresse. S'il est à portée, c'est lui ; si un
+  autre répond seul, l'application l'attend cinq secondes, puis se lie à
+  l'autre — et le nom de l'appareil lié s'affiche toujours en tête de l'écran.
+- Une liaison qui ne livre plus de mesures pendant dix secondes échoue et se
+  relance, au lieu de laisser l'écran figé sur une valeur ancienne.
+- Ouvrir l'application deux fois — par un raccourci, par exemple — ne crée plus
+  deux sessions qui se disputent l'analyseur.
 
-L'écran **Imprimantes** lance une recherche dès qu'on l'ouvre. Une Zebra s'y
-reconnaît à deux choses :
+## L'imprimante
 
-- l'identifiant **0xFE79** qu'elle annonce, attribué à Zebra par le Bluetooth
-  SIG — même quand sa découverte classique est coupée ;
-- le **préfixe de son adresse**, attribué à Zebra Technologies par l'IEEE —
-  c'est ce qui reconnaît une imprimante retenue ou saisie à la main avant
-  qu'on l'ait entendue.
+- **« Imprimer quand même »** sur un rouleau dont la longueur ne correspond
+  pas à l'étiquette, quand c'est le seul problème : la confirmation nomme les
+  deux longueurs, et le journal garde la trace. Un capot ouvert, un papier ou
+  un ruban épuisé, une pause, ne se contournent jamais.
+- **Vider la file** de l'imprimante après une coupure en plein envoi, depuis
+  l'application, au lieu de l'éteindre.
+- « Imprimer les 2 étiquettes » **s'arrête à la première qui n'est pas
+  sortie**, au lieu d'envoyer la suivante derrière un reste.
+- La recherche **dit quand elle n'a pas pu écouter** — Bluetooth éteint,
+  balayage refusé — au lieu de conclure qu'il n'y a pas d'imprimante. Les
+  appareils écartés se montrent, repliés, et se choisissent : une Zebra au
+  préfixe d'adresse inconnu peut s'y trouver.
+- Une imprimante éteinte depuis la dernière recherche reste listée, mais sans
+  puissance de signal : elle ne paraît plus répondre.
+- **Une imprimante qui demande une association** coupe la liaison au bout de
+  trente secondes. Le message le dit désormais, avec le remède. Le cas s'est
+  produit : une ZD421t gardait en mémoire un appairage qu'on avait défait côté
+  téléphone seulement, et réclamait une association à ce téléphone-là à chaque
+  connexion. **Ne l'acceptez pas** ; videz le cache d'associations de
+  l'imprimante (commande SGD `bluetooth.clear_bonding_cache`).
 
-Tout le reste — montres, écouteurs, voitures — est écarté, et le nombre
-d'appareils écartés est affiché. Le nom affiché est celui que l'imprimante
-annonce aujourd'hui, et non celui que le téléphone avait noté autrefois.
+## Le journal
 
-Une imprimante que la recherche ne montre pas se retient encore par son
-adresse, imprimée sur l'étiquette de configuration de la machine.
+- Chaque étiquette sortie est consignée **avec le mélange et la ppO₂ de son
+  envoi**. Un rattrapage d'oxygène fait après l'impression, sans réimprimer,
+  se signale dans la liste.
+- **Le fichier partagé se relit après chaque écriture.** Rien ne compte comme
+  envoyé qui ne se relit pas à l'identique : une écriture coupée ne peut plus
+  laisser croire que le dossier a tout reçu, et « Effacer l'appareil » reste
+  fermé tant que ce n'est pas le cas.
+- Une copie locale illisible ne passe plus pour vide, et ne s'efface pas.
+- **Une mesure que le journal n'a pas pu écrire se dit sur tous les écrans**,
+  par un bandeau rouge qui mène au journal.
 
-## Une imprimante pas prête refuse l'étiquette
+## La simulation
 
-Avant chaque envoi, l'application demande son état à l'imprimante. Rien ne
-part si :
-
-- le capot est ouvert, le papier ou le ruban épuisé, l'imprimante en pause ;
-- la tête ou le moteur est trop chaud ;
-- le **rouleau chargé n'est pas celui de l'étiquette** — un col envoyé à
-  l'imprimante du grand format, par exemple.
-
-Chaque refus dit le geste qui le lève : « capot ouvert — referme-le, puis
-appuie sur Pause ». Une Zebra dont le capot est ouvert accepte l'étiquette, la
-garde, et l'imprime à la fermeture — plus tard, devant une autre bouteille
-peut-être. C'est ce que ce refus empêche.
-
-Les avertissements qui n'empêchent pas d'imprimer — calibration à refaire,
-tête à nettoyer, fin de rouleau proche — accompagnent le message d'envoi.
-
-## Des échecs qui se lisent
-
-- **Imprimante injoignable** : « ne répond pas. Rien n'a été envoyé », puis ce
-  qu'il faut vérifier — allumée, à portée, pas connectée à un autre appareil.
-- **Coupure en plein envoi** : l'écran prévient qu'une étiquette tronquée a pu
-  sortir, et dit de la jeter et de redémarrer l'imprimante.
-- **Le message ne se cache plus** sous la barre d'impression du téléphone :
-  la barre le redit au-dessus de son bouton.
+Le simulateur n'existe pas dans ce fichier. Dans la version de développement,
+**rien de simulé ne part plus vers une imprimante** : le papier ne dit pas
+« simulé », et une étiquette sortie se colle sur une bouteille.
 
 ---
 
 ## Ce qui n'a pas été éprouvé
 
-Toutes ces erreurs ont été provoquées sur **une ZD421t et une ZD421c**, depuis
-un Pixel 10 Pro XL : capot ouvert, pause, cartouche retirée, mauvais rouleau,
-imprimante éteinte, imprimante tenue par un autre appareil. La surchauffe, le
-massicot et les avertissements d'entretien suivent le format documenté par
-Zebra mais n'ont pas été vus sur une vraie machine. La coupure en plein envoi
-n'a pas été provoquée.
+La coupure en plein envoi a été provoquée sur la ZD421t : la machine abandonne
+d'elle-même l'étiquette coupée. Ce que l'état de l'imprimante dit d'un travail
+en attente n'a donc jamais été vu levé, et ne fait qu'avertir.
+
+« Imprimer quand même » a été éprouvé sur la ZD421c ; le retour au bon rouleau
+entre le refus et la confirmation ne l'a pas été sur papier.
 
 Zebra présente ce Bluetooth comme réservé à son application de configuration :
 une mise à jour du micrologiciel pourrait fermer cette voie, et il n'y en a
@@ -90,7 +102,7 @@ capteur de l'appareil de test est en défaut.
 
 | | |
 |---|---|
-| Version | 0.22.0 |
+| Version | 0.23.1 |
 | Android minimum | 13 (API 33) |
-| Taille | 8,3 Mo |
-| SHA-256 | `d911173c1c99aaf2069fd9c8eca4d93eb381e7625d6e92200b73c1e7f7d41108` |
+| Taille | 8,4 Mo |
+| SHA-256 | `3868e1ee51b553795b3de09be32336c36a163bfa56c95fa3f454844a519071ba` |

@@ -63,8 +63,12 @@ qui signe les étiquettes. Rien d'autre ne se règle — ni option, ni préfére
 - **N'appairez pas l'imprimante** dans les réglages Bluetooth du téléphone :
   l'application n'en a pas besoin, et une imprimante appairée devient
   injoignable depuis les autres appareils.
-- Elle se connecte au **premier analyseur ECHO qu'elle trouve**. Si plusieurs
-  sont allumés à portée, rien ne garantit que ce soit le vôtre.
+- Elle **préfère le dernier analyseur ECHO** avec lequel la mesure a tourné,
+  retenu par son adresse — mais ne l'exige pas : s'il ne répond pas dans les
+  cinq secondes, elle se lie au premier autre qu'elle trouve. La toute
+  première fois, ou si le vôtre est éteint alors qu'un autre est allumé à
+  portée, rien ne garantit que ce soit le vôtre : **lisez le nom de
+  l'appareil** affiché en tête de l'écran.
 - Elle **exige un dossier Google Drive** au lancement, et ne s'ouvre pas sans.
   Le journal des analyses y est consigné, un fichier par appareil, pour que
   plusieurs téléphones tiennent le même cahier. C'est vous qui désignez le
@@ -112,7 +116,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.22.0.apk
+shasum -a 256 sonde-0.23.1.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -149,7 +153,7 @@ cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
 C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.22.0.apk
+aapt2 dump permissions sonde-0.23.1.apk
 ```
 
 ## Licence et droits
