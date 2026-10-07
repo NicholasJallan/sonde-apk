@@ -102,14 +102,13 @@ l'installation depuis une source inconnue :
 
 **Android 13 minimum**, et un téléphone doté du Bluetooth basse consommation.
 
-Android 13 plutôt que 8 est un choix délibéré, en deux temps. En deçà
-d'Android 12, tout scan Bluetooth exigeait la permission de **localisation**, et
-l'autorisation dont dépend la sélection d'imprimante n'existait pas : l'app y
-aurait réclamé davantage pour en faire moins. Le pas de 12 à 13 est venu de la
-recherche d'imprimante, qui lit les données de l'appareil trouvé par des
-méthodes **typées** apparues à cette version ; sous 13, la première imprimante
-trouvée faisait tomber l'application. Mieux vaut ne pas s'installer que
-s'installer à moitié.
+Android 13 plutôt que 8 est un choix délibéré. En deçà d'Android 12, tout scan
+Bluetooth exige la permission de **localisation**, et l'autorisation dont
+dépend la sélection d'imprimante n'existe pas : l'app y réclamerait davantage
+pour en faire moins. Et le dialogue Bluetooth emploie des méthodes apparues à
+Android 13, qui reçoivent leurs données directement au lieu de les faire
+transiter par un objet partagé où deux échanges simultanés s'écrasent. Mieux
+vaut ne pas s'installer que s'installer à moitié.
 
 L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 
@@ -118,7 +117,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.24.0.apk
+shasum -a 256 sonde-0.25.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -155,7 +154,7 @@ cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
 C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.24.0.apk
+aapt2 dump permissions sonde-0.25.0.apk
 ```
 
 ## Licence et droits
