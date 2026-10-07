@@ -74,8 +74,8 @@ L'application n'a que **deux réglages** : le nom imprimé par défaut sur les
 - Elle **exige un dossier Google Drive** au lancement, et ne s'ouvre pas sans.
   Le journal des analyses y est consigné, un fichier par appareil, pour que
   plusieurs téléphones tiennent le même cahier. C'est vous qui désignez le
-  dossier, dans le sélecteur système ; l'application n'a pas la permission
-  réseau et ne choisit rien à votre place — mais **ce que vous y consignez
+  dossier, dans le sélecteur système ; l'application n'y envoie rien par
+  elle-même et ne choisit rien à votre place — mais **ce que vous y consignez
   quitte le téléphone**, par l'application Drive. Si vous ne voulez pas de cela,
   ne l'installez pas : il n'y a pas d'option pour s'en passer.
 
@@ -117,7 +117,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.25.0.apk
+shasum -a 256 sonde-0.27.0.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -130,9 +130,18 @@ Un APK signé par une autre clé ne vient pas d'ici.
 
 ## Permissions demandées
 
-L'application **n'a pas la permission réseau** : elle ne peut d'elle-même
-joindre aucun serveur. Aucune donnée n'est collectée, aucune statistique n'est
-levée, et rien n'est envoyé à l'auteur ni à personne d'autre.
+L'application ne joint **qu'un seul serveur, et seulement si vous le
+permettez** : depuis la 0.27.0, elle peut demander à GitHub, à chaque
+lancement, le numéro de la dernière version publiée ici, pour vous dire quand
+la vôtre n'est plus la plus récente. Elle vous pose la question une fois, au
+premier lancement, et la réponse se change dans Réglages → Mises à jour. La
+requête va à `api.github.com` : GitHub voit l'adresse IP de l'appareil et la
+version de l'application, rien d'autre — ni mesure, ni nom, ni journal. Sans
+réseau, ou si vous refusez, rien ne change : l'application fonctionne
+entièrement hors ligne.
+
+Aucune donnée n'est collectée, aucune statistique n'est levée, et rien n'est
+envoyé à l'auteur ni à personne d'autre.
 
 Une réserve, et elle est importante : depuis la 0.19.0, le **journal des
 analyses** est écrit dans un dossier Google Drive **que vous désignez
@@ -141,20 +150,20 @@ qu'à travers l'autorisation que vous lui donnez sur ce dossier-là, et c'est
 l'application Drive — pas celle-ci — qui le synchronise. Ce sont donc vos
 mesures, dans votre Drive, mais elles ne restent plus sur l'appareil.
 
-Elle demande **deux** permissions, et rien d'autre :
+Elle demande **trois** permissions, et rien d'autre :
 
 | Permission | Pourquoi |
 |---|---|
 | `BLUETOOTH_SCAN` | trouver l'analyseur et les imprimantes. Déclarée `neverForLocation` : Android lui interdit alors d'en déduire une position, et le système le garantit |
 | `BLUETOOTH_CONNECT` | dialoguer avec l'analyseur et avec l'imprimante |
+| `INTERNET` | demander à GitHub le numéro de la dernière version, si vous l'avez permis. Android l'accorde sans rien demander : c'est l'application qui pose la question |
 
-Pas de localisation, pas de stockage, pas de réseau, pas de caméra, pas de
-contacts — l'accès au dossier du journal n'en demande aucune, il passe par le
+Pas de localisation, pas de stockage, pas de caméra, pas de contacts — l'accès au dossier du journal n'en demande aucune, il passe par le
 cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
 C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.25.0.apk
+aapt2 dump permissions sonde-0.27.0.apk
 ```
 
 ## Licence et droits

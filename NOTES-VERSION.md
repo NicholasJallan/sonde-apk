@@ -1,75 +1,40 @@
-# Note de version — 0.24.0
+# Note de version — 0.27.0
 
 Texte à coller dans la description de la version GitHub.
 
 ---
 
-Une version d'ajout : **une seule imprimante suffit désormais**, et
-l'application apprend à servir les Zebra ZD421 à **300 dpi**. Un écran de
-réglages fait son apparition — deux réglages, et aucun qui touche à la
-sécurité.
+Une version d'ajout : **l'application peut vous dire qu'une version plus
+récente est publiée**. Les étiquettes ne changent pas d'un point : la mise en
+page et le ZPL sont ceux de la 0.26.1.
 
-## Un écran « Réglages »
+## Mises à jour
 
-- **Le nom imprimé par défaut** sur les étiquettes. Le champ de l'écran
-  d'analyse sert toujours, pour un analyste de passage, mais il ne vaut plus
-  que pour la session : au lancement suivant, on retrouve le nom par défaut.
-  Une installation neuve n'en a aucun ; une installation existante garde le
-  sien.
-- **Une imprimante ou deux.** À deux, rien ne change : le corps sur une
-  100 × 150, le col et le registre sur une 76 × 51.
-- La **résolution** de chaque imprimante retenue s'y lit — elle ne s'y règle
-  pas, voir plus bas.
+- Au premier lancement, une question : **vérifier les nouvelles versions ?**
+  Elle dit pourquoi, ce qui part et ce qui se passe sans. Rien ne part avant
+  votre réponse.
+- Si vous l'avez permis, l'application demande à GitHub, à chaque lancement,
+  le numéro de la dernière version publiée ici. Quand la vôtre n'est plus la
+  plus récente, un message le dit au lancement, et **Réglages → Mises à
+  jour** offre d'ouvrir sa page dans le navigateur.
+- Ce qui part : une seule requête vers `api.github.com`. GitHub voit
+  l'adresse IP de l'appareil et la version de l'application — ni mesure, ni
+  nom, ni journal.
+- **Sans réseau, ou si vous refusez, rien ne change** : aucune erreur, rien
+  de bloqué, l'application fonctionne entièrement hors ligne. Le choix se
+  change à tout moment dans les réglages.
 
-Ni ppO₂, ni seuil, ni arrondi n'y figurent : ce sont des décisions prises
-bouteille par bouteille, ou celles de l'analyseur.
+## Une permission de plus
 
-## Une seule imprimante
-
-- Tout sort du rouleau **100 × 150**. Le col et le registre partagent une même
-  étiquette, l'un au-dessus de l'autre, séparés par un **trait de coupe**
-  pointillé : on coupe, et chaque moitié porte son étiquette entière.
-- Les deux étiquettes sont **exactement** celles du 76 × 51, au point près,
-  centrées dans 12 mm de blanc — rien n'a été recomposé.
-- Le travail d'une bouteille sort **d'un seul geste** : le corps, puis le col
-  et le registre. « Bouteille suivante » n'apparaît qu'une fois le col sorti ;
-  on ne peut plus passer à la suite en l'oubliant.
-- On bascule d'un mode à l'autre quand on veut — sauf au milieu d'une
-  bouteille dont des étiquettes sont déjà sorties. Les imprimantes de l'autre
-  mode restent retenues.
-
-## 300 dpi
-
-- Avant chaque envoi, l'application **demande sa résolution à l'imprimante**,
-  et l'étiquette part rendue pour elle : à 300 dpi, le même dessin agrandi
-  d'une fois et demie, logos compris (tirés de leurs sources, pas agrandis).
-  Le contrôle de rouleau se fait dans l'unité de la machine.
-- Une imprimante qui ne dit pas sa résolution est servie à 203 dpi, et l'envoi
-  le signale ; son refus de rouleau ne se lève alors plus sur confirmation.
-- **Le rendu à 300 dpi n'a encore jamais été imprimé.** Il est vérifié par le
-  calcul — tous les mélanges, sans débordement ni chevauchement —, pas sur
-  papier. Voir l'avertissement.
-- L'export d'un fichier ZPL prend la dernière résolution lue sur l'imprimante
-  du support, et le dit.
-
-## À savoir
-
-- L'étiquette au logo pèse deux fois plus à 300 dpi : comptez une vingtaine de
-  secondes d'envoi au lieu de dix.
-
-Zebra présente le Bluetooth basse consommation de la ZD421 comme réservé à son
-application de configuration : une mise à jour du micrologiciel pourrait
-fermer cette voie, et il n'y en a plus d'autre. L'export d'un fichier ZPL
-reste possible.
-
-L'alarme de CO n'a toujours jamais été vue se déclencher sur du vrai gaz : le
-capteur de l'appareil de test est en défaut.
+`INTERNET`, pour cette seule requête. Android l'accorde à l'installation sans
+rien demander : c'est l'application qui pose la question. Voir « Permissions
+demandées » dans le README.
 
 **Application non officielle, sans lien avec Divesoft s.r.o.**
 
 | | |
 |---|---|
-| Version | 0.24.0 |
+| Version | 0.27.0 |
 | Android minimum | 13 (API 33) |
-| Taille | 8,8 Mo |
-| SHA-256 | `0107f21464a8f99ed0b9de6f1317e92a18caad49d944d0cfb87e42b3d2a0ee0a` |
+| Taille | 9,0 Mo |
+| SHA-256 | `f7a68918f4e147d1329a3831922782f69ae02ab8175106e4e026b136e6ce5fa8` |
