@@ -117,7 +117,7 @@ L'application n'a par ailleurs été **éprouvée que sur Android 16**.
 Chaque version publiée indique l'empreinte SHA-256 de son APK. Comparez-la :
 
 ```bash
-shasum -a 256 sonde-0.27.0.apk
+shasum -a 256 sonde-0.28.1.apk
 ```
 
 Toutes les versions sont signées par la même clé, dont l'empreinte SHA-256 est :
@@ -130,15 +130,15 @@ Un APK signé par une autre clé ne vient pas d'ici.
 
 ## Permissions demandées
 
-L'application ne joint **qu'un seul serveur, et seulement si vous le
-permettez** : depuis la 0.27.0, elle peut demander à GitHub, à chaque
-lancement, le numéro de la dernière version publiée ici, pour vous dire quand
-la vôtre n'est plus la plus récente. Elle vous pose la question une fois, au
-premier lancement, et la réponse se change dans Réglages → Mises à jour. La
-requête va à `api.github.com` : GitHub voit l'adresse IP de l'appareil et la
-version de l'application, rien d'autre — ni mesure, ni nom, ni journal. Sans
-réseau, ou si vous refusez, rien ne change : l'application fonctionne
-entièrement hors ligne.
+L'application ne joint **qu'un seul serveur, pour une seule question** :
+elle demande à GitHub le numéro de la dernière version publiée ici, pour vous
+dire quand la vôtre n'est plus la plus récente. La question part à chaque
+lancement, et à chaque appui sur « Vérifier » dans Réglages → Mises à jour ;
+l'interrupteur « Vérifier au lancement », ouvert par défaut, coupe celle du
+lancement. La requête va à `api.github.com` : GitHub voit l'adresse IP de
+l'appareil et la version de l'application, rien d'autre — ni mesure, ni nom,
+ni journal. Sans réseau, ou interrupteur coupé, rien ne change :
+l'application fonctionne entièrement hors ligne.
 
 Aucune donnée n'est collectée, aucune statistique n'est levée, et rien n'est
 envoyé à l'auteur ni à personne d'autre.
@@ -156,14 +156,14 @@ Elle demande **trois** permissions, et rien d'autre :
 |---|---|
 | `BLUETOOTH_SCAN` | trouver l'analyseur et les imprimantes. Déclarée `neverForLocation` : Android lui interdit alors d'en déduire une position, et le système le garantit |
 | `BLUETOOTH_CONNECT` | dialoguer avec l'analyseur et avec l'imprimante |
-| `INTERNET` | demander à GitHub le numéro de la dernière version, si vous l'avez permis. Android l'accorde sans rien demander : c'est l'application qui pose la question |
+| `INTERNET` | demander à GitHub le numéro de la dernière version, au lancement et sur « Vérifier ». Se coupe dans Réglages → Mises à jour. Android l'accorde à l'installation sans rien demander |
 
 Pas de localisation, pas de stockage, pas de caméra, pas de contacts — l'accès au dossier du journal n'en demande aucune, il passe par le
 cadre d'accès au stockage et n'existe que pour le dossier que vous avez choisi.
 C'est vérifiable sur le fichier lui-même :
 
 ```bash
-aapt2 dump permissions sonde-0.27.0.apk
+aapt2 dump permissions sonde-0.28.1.apk
 ```
 
 ## Licence et droits
