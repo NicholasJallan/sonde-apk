@@ -46,7 +46,7 @@ n'est pas éprouvé :
 | **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil**, à travers **une** mise à jour de son micrologiciel, qui n'a rien cassé — rien ne garantit les suivantes. Sur un autre appareil, ou après une autre mise à jour, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
 | **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
-| **Imprimantes à 300 dpi** | L'application demande sa résolution à l'imprimante et rend l'étiquette pour elle. Ce rendu n'a **jamais été imprimé** : il est vérifié par le calcul, pas sur papier. Une imprimante qui ne répond pas est servie à 203 dpi — sur une 300 dpi, l'étiquette sortirait alors aux deux tiers de sa taille, et l'envoi le signale. **Vérifiez votre première étiquette.** |
+| **Imprimantes à 300 dpi** | L'application demande sa résolution à l'imprimante et rend l'étiquette pour elle. Ce rendu a été **imprimé sur une ZD421t à 300 dpi** : la largeur sort exacte, mais l'image sortait 1 à 2 mm trop haut, et le haut du col était coupé. D'où le **calage** (Imprimantes → Calage) : une étiquette de traits, deux numéros à reporter, et l'image est replacée pour cette imprimante. Que la machine applique bien ce calage reste à confirmer sur une seconde étiquette de calage. Une imprimante qui ne répond pas est servie à 203 dpi — sur une 300 dpi, l'étiquette sortirait alors aux deux tiers de sa taille, et l'envoi le signale. **Vérifiez votre première étiquette.** |
 | **Impression en Bluetooth basse consommation** | C'est la **seule** voie d'impression. Zebra la présente pourtant comme réservée à son application de configuration. Éprouvée sur **une ZD421t et une ZD421c**, depuis un téléphone et une tablette ; une mise à jour du micrologiciel de l'imprimante pourrait la fermer, et il n'y aurait alors plus que l'export d'un fichier ZPL. |
 
 ### Ce qu'elle ne sait pas faire
@@ -55,7 +55,7 @@ L'application n'a que **deux réglages** : le nom imprimé par défaut sur les
 étiquettes, et une imprimante ou deux. Rien d'autre ne se règle.
 
 - **Une seule famille d'imprimantes** : Zebra ZD421, à ruban ou à cartouche, à
-  203 dpi — éprouvée — ou à 300 dpi — prise en charge, jamais imprimée.
+  203 dpi ou à 300 dpi — toutes deux imprimées, la seconde à caler.
 - **Deux formats d'étiquettes** seulement : 100 × 150 mm et 76 × 51 mm. Avec
   une seule imprimante, tout sort sur le 100 × 150, le col et le registre
   partageant une étiquette à couper au trait.
