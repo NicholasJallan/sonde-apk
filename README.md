@@ -46,13 +46,14 @@ n'est pas éprouvé :
 | **Protocole de l'analyseur** | Reconstitué par rétro-ingénierie, sans documentation du fabricant. Validé sur **un seul appareil**, à travers **une** mise à jour de son micrologiciel, qui n'a rien cassé — rien ne garantit les suivantes. Sur un autre appareil, ou après une autre mise à jour, les valeurs affichées pourraient être fausses **sans que rien ne le signale**. |
 | **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
-| **Imprimantes à 300 dpi** | L'application demande sa résolution à l'imprimante et rend l'étiquette pour elle. Ce rendu a été **imprimé sur une ZD421t à 300 dpi** : largeur et longueur sortent exactes. Cette machine posait son image un peu trop haut ; le **calage** (Imprimantes → Calage) la replace, et il a été vérifié sur papier. Elle n'imprime pas non plus jusqu'au bord de l'étiquette — 0,5 à 1 mm perdus à chaque bord —, si bien que le col et le registre laissent 1,25 mm libres tout autour. Une imprimante qui ne répond pas est servie à la dernière résolution qu'elle a annoncée, à 203 dpi si elle n'en a jamais annoncé, et l'envoi le signale. **Vérifiez votre première étiquette.** |
+| **Imprimantes à 300 dpi** | L'application demande sa résolution à l'imprimante et rend l'étiquette pour elle. Une ZD421t à 300 dpi ne pose pas ses points à 12 par millimètre, comme Zebra l'annonce : celle de l'auteur en pose 11,80 en largeur et 11,57 dans le sens du papier, mesurés au réglet, et l'application compose à ces valeurs — sans quoi l'étiquette sortait 1,6 % trop large et 3,75 % trop longue, rognée aux bords. **Une seule machine a été mesurée** : une autre pourrait différer, surtout dans le sens du papier. Le **calage** (Imprimantes → Calage) replace l'image en hauteur ; le col et le registre laissent 1,25 mm libres tout autour. Une imprimante qui ne répond pas est servie à la dernière résolution qu'elle a annoncée, à 203 dpi si elle n'en a jamais annoncé, et l'envoi le signale. **Vérifiez votre première étiquette.** |
 | **Impression en Bluetooth basse consommation** | C'est la **seule** voie d'impression. Zebra la présente pourtant comme réservée à son application de configuration. Éprouvée sur **une ZD421t et une ZD421c**, depuis un téléphone et une tablette ; une mise à jour du micrologiciel de l'imprimante pourrait la fermer, et il n'y aurait alors plus que l'export d'un fichier ZPL. |
 
 ### Ce qu'elle ne sait pas faire
 
-L'application n'a que **deux réglages** : le nom imprimé par défaut sur les
-étiquettes, et une imprimante ou deux. Rien d'autre ne se règle.
+L'application n'a que **trois réglages** : le nom imprimé par défaut sur les
+étiquettes, une imprimante ou deux, et la vérification des mises à jour. Rien
+d'autre ne se règle.
 
 - **Une seule famille d'imprimantes** : Zebra ZD421, à ruban ou à cartouche, à
   203 dpi ou à 300 dpi — toutes deux imprimées, la seconde à caler.
@@ -73,9 +74,11 @@ L'application n'a que **deux réglages** : le nom imprimé par défaut sur les
   l'appareil** affiché en tête de l'écran.
 - Elle **exige un dossier Google Drive** au lancement, et ne s'ouvre pas sans.
   Le journal des analyses y est consigné, un fichier par appareil, pour que
-  plusieurs téléphones tiennent le même cahier. C'est vous qui désignez le
-  dossier, dans le sélecteur système ; l'application n'y envoie rien par
-  elle-même et ne choisit rien à votre place — mais **ce que vous y consignez
+  plusieurs téléphones tiennent le même cahier — et le calage des imprimantes
+  avec lui, pour qu'une imprimante calée sur un appareil le soit sur tous.
+  C'est vous qui désignez le dossier, dans le sélecteur système ;
+  l'application n'y envoie rien par elle-même et ne choisit rien à votre
+  place — mais **ce que vous y consignez
   quitte le téléphone**, par l'application Drive. Si vous ne voulez pas de cela,
   ne l'installez pas : il n'y a pas d'option pour s'en passer.
 
