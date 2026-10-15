@@ -169,6 +169,14 @@ C'est vérifiable sur le fichier lui-même :
 aapt2 dump permissions sonde-0.28.1.apk
 ```
 
+**Réglages → Appareil → Signaler un problème** n'en demande aucune non plus.
+Il enregistre le journal technique de l'application pendant que vous refaites
+ce qui pose problème — avec, pour reconnaître un analyseur ou une imprimante
+introuvables, l'adresse et l'annonce des appareils Bluetooth entendus
+alentour —, puis ouvre votre messagerie sur un courriel adressé au
+développeur, rapport compressé en pièce jointe. Rien ne part sans que vous
+appuyiez sur Envoyer ; l'écran dit ce que le rapport contient.
+
 ## Licence et droits
 
 Voir **[LICENSE](LICENSE)**. En résumé, sans que ce résumé ne s'y substitue :
