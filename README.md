@@ -47,21 +47,27 @@ n'est pas éprouvé :
 | **Alarme de monoxyde de carbone** | Le seuil est celui de l'analyseur — 5 ppm —, et l'unité est confirmée par l'opérateur. Mais le capteur CO de l'appareil de test est **en défaut** : l'alarme n'a jamais été vue se déclencher sur du vrai gaz, seulement en simulation. Ne lui confiez pas votre seule décision. |
 | **Réglages du support** | Transfert thermique et détection par l'espace inter-étiquette sont imposés en dur. |
 | **Imprimantes à 300 dpi** | L'application demande sa résolution à l'imprimante et rend l'étiquette pour elle. Une ZD421t à 300 dpi ne pose pas ses points à 12 par millimètre, comme Zebra l'annonce : celle de l'auteur en pose 11,80 en largeur et 11,57 dans le sens du papier, mesurés au réglet, et l'application compose à ces valeurs — sans quoi l'étiquette sortait 1,6 % trop large et 3,75 % trop longue, rognée aux bords. **Une seule machine a été mesurée** : une autre pourrait différer, surtout dans le sens du papier. Le **calage** (Imprimantes → Calage) replace l'image en hauteur ; le col et le registre laissent 1,25 mm libres tout autour. Une imprimante qui ne répond pas est servie à la dernière résolution qu'elle a annoncée, à 203 dpi si elle n'en a jamais annoncé, et l'envoi le signale. **Vérifiez votre première étiquette.** |
+| **Vos logos** | Le contrôle de l'image est éprouvé sur un jeu d'essai, à l'écran, jamais sur une impression réelle : les seuils de ses avertissements — traits trop fins, gris perdus, dégradés — sont supposés. Un logo accepté peut sortir moins net que son aperçu. **Imprimez une étiquette d'essai avant de vous y fier.** |
 | **Impression en Bluetooth basse consommation** | C'est la **seule** voie d'impression. Zebra la présente pourtant comme réservée à son application de configuration. Éprouvée sur **une ZD421t et une ZD421c**, depuis un téléphone et une tablette ; une mise à jour du micrologiciel de l'imprimante pourrait la fermer, et il n'y aurait alors plus que l'export d'un fichier ZPL. |
 
 ### Ce qu'elle ne sait pas faire
 
-L'application n'a que **trois réglages** : le nom imprimé par défaut sur les
-étiquettes, une imprimante ou deux, et la vérification des mises à jour. Rien
-d'autre ne se règle.
+L'application n'a que **quatre réglages** : le nom imprimé par défaut sur les
+étiquettes, une imprimante ou deux, les logos des étiquettes, et la
+vérification des mises à jour. Rien d'autre ne se règle.
 
 - **Une seule famille d'imprimantes** : Zebra ZD421, à ruban ou à cartouche, à
   203 dpi ou à 300 dpi — toutes deux imprimées, la seconde à caler.
 - **Deux formats d'étiquettes** seulement : 100 × 150 mm et 76 × 51 mm. Avec
   une seule imprimante, tout sort sur le 100 × 150, le col et le registre
   partageant une étiquette à couper au trait.
-- **Les étiquettes portent la marque de l'auteur**, imprimée en dur. Vous ne
-  pouvez pas la retirer ni la remplacer par la vôtre.
+- **Les étiquettes portent la marque de l'auteur** par défaut. Depuis la
+  0.35.0, Réglages → Logos des étiquettes la remplace par la vôtre — le
+  logotype du grand format, la marque du col et du diluent, chacun à part —,
+  dans le même cadre : rien d'autre ne bouge sur l'étiquette. L'écran dit ce qu'il
+  faut fournir, juge l'image et montre l'étiquette avant de l'adopter. On ne
+  peut pas imprimer **sans** logo, sauf si le vôtre n'est pas lisible sur
+  l'appareil : l'étiquette part alors sans, et l'écran le dit.
 - **Français uniquement**, **mètres uniquement**.
 - **N'appairez pas l'imprimante** dans les réglages Bluetooth du téléphone :
   l'application n'en a pas besoin, et une imprimante appairée devient
@@ -75,7 +81,8 @@ d'autre ne se règle.
 - Elle **exige un dossier Google Drive** au lancement, et ne s'ouvre pas sans.
   Le journal des analyses y est consigné, un fichier par appareil, pour que
   plusieurs téléphones tiennent le même cahier — et le calage des imprimantes
-  avec lui, pour qu'une imprimante calée sur un appareil le soit sur tous.
+  avec lui, pour qu'une imprimante calée sur un appareil le soit sur tous, et
+  vos logos, pour qu'ils s'impriment sur tous les appareils.
   C'est vous qui désignez le dossier, dans le sélecteur système ;
   l'application n'y envoie rien par elle-même et ne choisit rien à votre
   place — mais **ce que vous y consignez
